@@ -712,9 +712,10 @@ footer {
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  /* Top is nearly transparent so video shows behind header, darkens toward center+bottom */
   background:
-    radial-gradient(60% 55% at 50% 50%, rgba(5, 3, 8, .78) 0%, rgba(5, 3, 8, .55) 60%, rgba(5, 3, 8, .25) 100%),
-    linear-gradient(180deg, rgba(5, 3, 8, .55) 0%, rgba(5, 3, 8, .25) 35%, rgba(5, 3, 8, .35) 65%, rgba(5, 3, 8, .9) 100%);
+    radial-gradient(60% 55% at 50% 55%, rgba(5, 3, 8, .65) 0%, rgba(5, 3, 8, .4) 60%, rgba(5, 3, 8, .15) 100%),
+    linear-gradient(180deg, rgba(5, 3, 8, .08) 0%, rgba(5, 3, 8, .15) 12%, rgba(5, 3, 8, .35) 40%, rgba(5, 3, 8, .4) 65%, rgba(5, 3, 8, .92) 100%);
 }
 
 .hero--video .hero-content {
