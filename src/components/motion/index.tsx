@@ -389,10 +389,12 @@ export function TwoFlames({ height = 480, className = '' }: TwoFlamesProps) {
         target: ref,
         offset: ['start 85%', 'end 15%'],
     })
-    const xLeft = useTransform(scrollYProgress, [0, 0.6], ['-22%', '0%'])
-    const xRight = useTransform(scrollYProgress, [0, 0.6], ['22%', '0%'])
-    const glow = useTransform(scrollYProgress, [0, 0.6, 0.9], [0.55, 1.1, 0.85])
-    const yBreath = useTransform(scrollYProgress, [0, 1], ['-4%', '4%'])
+    // Start far apart (-38% / +38%), come together at center
+    const xLeft = useTransform(scrollYProgress, [0, 0.65], ['-38%', '0%'])
+    const xRight = useTransform(scrollYProgress, [0, 0.65], ['38%', '0%'])
+    const glow = useTransform(scrollYProgress, [0, 0.5, 0.9], [0.7, 1.0, 0.9])
+    const yBreath = useTransform(scrollYProgress, [0, 1], ['-3%', '3%'])
+    const mergeOpacity = useTransform(scrollYProgress, [0.55, 0.75], [0, 1])
 
     return (
         <div ref={ref} className={`two-flames ${className}`} style={{ height }}>
@@ -410,7 +412,7 @@ export function TwoFlames({ height = 480, className = '' }: TwoFlamesProps) {
             />
             <motion.span
                 className="flame-merge"
-                style={{ opacity: useTransform(scrollYProgress, [0.5, 0.7], [0, 1]) }}
+                style={{ opacity: mergeOpacity }}
                 aria-hidden="true"
             />
         </div>
