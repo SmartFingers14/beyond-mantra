@@ -20,7 +20,7 @@ export default function Header() {
     const pathname = usePathname()
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 16)
+        const onScroll = () => setScrolled(window.scrollY > 60)
         window.addEventListener('scroll', onScroll, { passive: true })
         onScroll()
         return () => window.removeEventListener('scroll', onScroll)
