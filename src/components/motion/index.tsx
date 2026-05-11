@@ -462,14 +462,17 @@ export function ConstellationCursor({ density = 0.00018, linkRadius = 200 }: Con
         const MAX_STAR_LINKS = 8     // cap inter-star lines
         const SCROLL_PARALLAX = 0.15 // how much stars drift on scroll
 
+        let hidden = false
+        const onVis = () => { hidden = document.hidden }
+
         const resize = () => {
-            const dpr = window.devicePixelRatio || 1
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.5) // cap DPR for perf
             canvas.width = window.innerWidth * dpr
             canvas.height = window.innerHeight * dpr
             canvas.style.width = window.innerWidth + 'px'
             canvas.style.height = window.innerHeight + 'px'
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-            const count = Math.floor(window.innerWidth * window.innerHeight * density)
+            const count = Math.min(Math.floor(window.innerWidth * window.innerHeight * density), 300) // cap star count
             stars = Array.from({ length: count }, () => ({
                 x: Math.random() * window.innerWidth,
                 y: Math.random() * window.innerHeight,
@@ -490,6 +493,8 @@ export function ConstellationCursor({ density = 0.00018, linkRadius = 200 }: Con
         const loop = (t: number) => {
             const dt = Math.min((t - t0) / 16.66, 3) // cap delta for tab switches
             t0 = t
+            // Skip rendering when tab is hidden
+            if (hidden) { raf = requestAnimationFrame(loop); return }
             const W = window.innerWidth
             const H = window.innerHeight
             ctx.clearRect(0, 0, W, H)
@@ -602,12 +607,14 @@ export function ConstellationCursor({ density = 0.00018, linkRadius = 200 }: Con
         window.addEventListener('mouseleave', onLeave)
         window.addEventListener('scroll', onScroll, { passive: true })
         window.addEventListener('resize', resize)
+        document.addEventListener('visibilitychange', onVis)
         return () => {
             cancelAnimationFrame(raf)
             window.removeEventListener('mousemove', onMove)
             window.removeEventListener('mouseleave', onLeave)
             window.removeEventListener('scroll', onScroll)
             window.removeEventListener('resize', resize)
+            document.removeEventListener('visibilitychange', onVis)
         }
     }, [density, linkRadius])
 
