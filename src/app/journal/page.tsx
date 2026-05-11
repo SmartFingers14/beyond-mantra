@@ -1,38 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Reveal from '@/components/Reveal'
+import { posts } from '@/lib/posts'
 
 export const metadata: Metadata = {
     title: 'Journal — Essays from the Edge of the Known',
     description: 'Vedic astrology, tarot, numerology and sacred wisdom — written for modern seekers who feel the question before they have words for it.',
 }
-
-const posts = [
-    {
-        slug: 'saturn-return',
-        glyph: '♄',
-        category: 'Vedic Astrology',
-        date: 'May 2026',
-        title: 'The Saturn Return: When the cosmos asks you to grow up.',
-        excerpt: 'Why your late twenties feel like an unraveling — and why that unraveling is sacred.',
-    },
-    {
-        slug: 'tarot-not-prediction',
-        glyph: '☾',
-        category: 'Tarot',
-        date: 'April 2026',
-        title: 'Tarot is not prediction. It is permission.',
-        excerpt: 'The cards do not tell you what will happen. They tell you what you already know.',
-    },
-    {
-        slug: 'numerology-name',
-        glyph: '✦',
-        category: 'Numerology',
-        date: 'March 2026',
-        title: 'Your name is not an accident.',
-        excerpt: 'The silent geometry of the letters you were given — and what they have been trying to say.',
-    },
-]
 
 export default function Journal() {
     return (
