@@ -634,48 +634,12 @@ interface RouteCurtainProps {
 }
 
 export function RouteCurtain({ routeKey }: RouteCurtainProps) {
-    const [phase, setPhase] = useState<'idle' | 'cover' | 'reveal'>('idle')
-
-    useEffect(() => {
-        setPhase('cover')
-        const t1 = setTimeout(() => setPhase('reveal'), 480)
-        const t2 = setTimeout(() => setPhase('idle'), 1100)
-        return () => { clearTimeout(t1); clearTimeout(t2) }
-    }, [routeKey])
-
-    return (
-        <AnimatePresence>
-            {phase !== 'idle' && (
-                <>
-                    <motion.div
-                        key="curtain-top"
-                        className="route-curtain route-curtain--top"
-                        initial={{ y: '-100%' }}
-                        animate={{ y: phase === 'cover' ? '0%' : '-100%' }}
-                        transition={{ duration: 0.6, ease: EASE }}
-                    />
-                    <motion.div
-                        key="curtain-bottom"
-                        className="route-curtain route-curtain--bottom"
-                        initial={{ y: '100%' }}
-                        animate={{ y: phase === 'cover' ? '0%' : '100%' }}
-                        transition={{ duration: 0.6, ease: EASE }}
-                    />
-                    <motion.div
-                        key="curtain-glyph"
-                        className="route-curtain-glyph"
-                        initial={{ opacity: 0, scale: 0.6 }}
-                        animate={{
-                            opacity: phase === 'cover' ? 1 : 0,
-                            scale: phase === 'cover' ? 1 : 0.6,
-                        }}
-                        transition={{ duration: 0.5, ease: EASE }}>
-                        ✦
-                    </motion.div>
-                </>
-            )}
-        </AnimatePresence>
-    )
+    // RouteCurtain disabled — the full-viewport cover was blocking
+    // Next.js from fetching page JS chunks on navigation, causing
+    // "This page couldn't load" errors. Navigation is handled by
+    // Next.js App Router's built-in transitions instead.
+    void routeKey
+    return null
 }
 
 /* ---------------------------------------------------------------------
