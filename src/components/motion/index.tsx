@@ -419,42 +419,26 @@ export function TwoFlames({ height = 480, className = '' }: TwoFlamesProps) {
 
 /* ---------------------------------------------------------------------
    CursorFollower
-   A tiny glowing dot that lags behind the cursor. Desktop only.
+   Now renders entirely on canvas (no DOM element = no outline).
+   Returns null — the glow is drawn by ConstellationCursor below.
 --------------------------------------------------------------------- */
 export function CursorFollower() {
-    const x = useSpring(0, { stiffness: 350, damping: 28, mass: 0.5 })
-    const y = useSpring(0, { stiffness: 350, damping: 28, mass: 0.5 })
-    const [enabled, setEnabled] = useState(false)
-
-    useEffect(() => {
-        if (window.matchMedia('(pointer: coarse)').matches) return
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-        setEnabled(true)
-        const onMove = (e: MouseEvent) => { x.set(e.clientX); y.set(e.clientY) }
-        window.addEventListener('mousemove', onMove)
-        return () => window.removeEventListener('mousemove', onMove)
-    }, [x, y])
-
-    if (!enabled) return null
-    return (
-        <motion.div
-            className="cursor-dot"
-            style={{ x, y }}
-            aria-hidden="true"
-        />
-    )
+    // The glow is now drawn on the constellation canvas.
+    // This component exists only for backwards-compatible imports.
+    return null
 }
 
 /* ---------------------------------------------------------------------
    ConstellationCursor
-   Canvas overlay that draws faint gold lines from cursor to nearest stars.
+   Unified canvas: cursor glow + constellation lines + star-to-star web.
+   Aesthetic, subtle, premium.
 --------------------------------------------------------------------- */
 interface ConstellationCursorProps {
     density?: number
     linkRadius?: number
 }
 
-export function ConstellationCursor({ density = 0.00028, linkRadius = 260 }: ConstellationCursorProps) {
+export function ConstellationCursor({ density = 0.00018, linkRadius = 200 }: ConstellationCursorProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
@@ -468,84 +452,131 @@ export function ConstellationCursor({ density = 0.00028, linkRadius = 260 }: Con
 
         type Star = { x: number; y: number; vx: number; vy: number; r: number; phase: number }
         let stars: Star[] = []
+        const mouse = { x: -9999, y: -9999 }
+        // Smooth cursor position (lerped)
         const cursor = { x: -9999, y: -9999 }
         let raf: number
-        const starLinkRadius = 110 // star-to-star connection distance
+        const MAX_CURSOR_LINES = 6  // only connect to nearest 6 stars
+        const STAR_LINK_RADIUS = 100 // star-to-star distance
+        const MAX_STAR_LINKS = 8     // cap inter-star lines
 
         const resize = () => {
-            canvas.width = window.innerWidth
-            canvas.height = window.innerHeight
-            const count = Math.floor(canvas.width * canvas.height * density)
+            const dpr = window.devicePixelRatio || 1
+            canvas.width = window.innerWidth * dpr
+            canvas.height = window.innerHeight * dpr
+            canvas.style.width = window.innerWidth + 'px'
+            canvas.style.height = window.innerHeight + 'px'
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+            const count = Math.floor(window.innerWidth * window.innerHeight * density)
             stars = Array.from({ length: count }, () => ({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.06,
-                vy: (Math.random() - 0.5) * 0.06,
-                r: Math.random() * 1.4 + 0.3,
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                vx: (Math.random() - 0.5) * 0.05,
+                vy: (Math.random() - 0.5) * 0.05,
+                r: Math.random() * 1.3 + 0.3,
                 phase: Math.random() * Math.PI * 2,
             }))
         }
         resize()
 
-        const onMove = (e: MouseEvent) => { cursor.x = e.clientX; cursor.y = e.clientY }
-        const onLeave = () => { cursor.x = -9999; cursor.y = -9999 }
+        const onMove = (e: MouseEvent) => { mouse.x = e.clientX; mouse.y = e.clientY }
+        const onLeave = () => { mouse.x = -9999; mouse.y = -9999 }
 
         let t0 = performance.now()
         const loop = (t: number) => {
-            const dt = (t - t0) / 16.66
+            const dt = Math.min((t - t0) / 16.66, 3) // cap delta for tab switches
             t0 = t
-            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            const W = window.innerWidth
+            const H = window.innerHeight
+            ctx.clearRect(0, 0, W, H)
+
+            // Smooth cursor lerp (silky lag)
+            const lerpFactor = 1 - Math.pow(0.08, dt)
+            if (mouse.x > 0) {
+                if (cursor.x < 0) { cursor.x = mouse.x; cursor.y = mouse.y }
+                cursor.x += (mouse.x - cursor.x) * lerpFactor
+                cursor.y += (mouse.y - cursor.y) * lerpFactor
+            } else {
+                cursor.x = -9999; cursor.y = -9999
+            }
 
             // Update + draw stars
             for (const s of stars) {
                 s.x += s.vx * dt
                 s.y += s.vy * dt
-                if (s.x < 0 || s.x > canvas.width) s.vx *= -1
-                if (s.y < 0 || s.y > canvas.height) s.vy *= -1
-                const twinkle = 0.55 + Math.sin(t * 0.002 + s.phase) * 0.45
-                ctx.fillStyle = `rgba(230,210,163,${0.4 * twinkle})`
+                if (s.x < 0 || s.x > W) s.vx *= -1
+                if (s.y < 0 || s.y > H) s.vy *= -1
+                const twinkle = 0.5 + Math.sin(t * 0.0018 + s.phase) * 0.5
+                ctx.globalAlpha = 0.35 * twinkle
+                ctx.fillStyle = '#e6d2a3'
                 ctx.beginPath()
                 ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
                 ctx.fill()
             }
+            ctx.globalAlpha = 1
 
-            // Cursor-to-star lines (gold, more visible)
-            for (const s of stars) {
-                const dx = s.x - cursor.x
-                const dy = s.y - cursor.y
-                const d = Math.hypot(dx, dy)
-                if (d < linkRadius) {
-                    const a = (1 - d / linkRadius) * 0.45
-                    ctx.strokeStyle = `rgba(201,169,106,${a})`
-                    ctx.lineWidth = 0.8
+            const cursorActive = cursor.x > 0 && cursor.y > 0
+            if (cursorActive) {
+                // --- Cursor glow (drawn on canvas — no DOM element, no outline) ---
+                const glowGrad = ctx.createRadialGradient(cursor.x, cursor.y, 0, cursor.x, cursor.y, 22)
+                glowGrad.addColorStop(0, 'rgba(255,248,231,0.85)')
+                glowGrad.addColorStop(0.15, 'rgba(230,210,163,0.55)')
+                glowGrad.addColorStop(0.35, 'rgba(201,169,106,0.2)')
+                glowGrad.addColorStop(0.6, 'rgba(201,169,106,0.06)')
+                glowGrad.addColorStop(1, 'rgba(201,169,106,0)')
+                ctx.fillStyle = glowGrad
+                ctx.beginPath()
+                ctx.arc(cursor.x, cursor.y, 22, 0, Math.PI * 2)
+                ctx.fill()
+
+                // Outer soft halo
+                const haloGrad = ctx.createRadialGradient(cursor.x, cursor.y, 8, cursor.x, cursor.y, 48)
+                haloGrad.addColorStop(0, 'rgba(230,210,163,0.12)')
+                haloGrad.addColorStop(0.5, 'rgba(201,169,106,0.04)')
+                haloGrad.addColorStop(1, 'rgba(201,169,106,0)')
+                ctx.fillStyle = haloGrad
+                ctx.beginPath()
+                ctx.arc(cursor.x, cursor.y, 48, 0, Math.PI * 2)
+                ctx.fill()
+
+                // --- Find nearest stars to cursor ---
+                type StarDist = { star: Star; dist: number }
+                const nearby: StarDist[] = []
+                for (const s of stars) {
+                    const d = Math.hypot(s.x - cursor.x, s.y - cursor.y)
+                    if (d < linkRadius) nearby.push({ star: s, dist: d })
+                }
+                // Sort by distance, take only nearest MAX_CURSOR_LINES
+                nearby.sort((a, b) => a.dist - b.dist)
+                const connected = nearby.slice(0, MAX_CURSOR_LINES)
+
+                // --- Cursor-to-star lines (gold, thin, elegant) ---
+                for (const { star: s, dist: d } of connected) {
+                    const alpha = (1 - d / linkRadius) * 0.3
+                    ctx.strokeStyle = `rgba(201,169,106,${alpha})`
+                    ctx.lineWidth = 0.5
                     ctx.beginPath()
                     ctx.moveTo(cursor.x, cursor.y)
                     ctx.lineTo(s.x, s.y)
                     ctx.stroke()
                 }
-            }
 
-            // Star-to-star lines (subtle web near cursor)
-            const cursorActive = cursor.x > 0 && cursor.y > 0
-            if (cursorActive) {
-                for (let i = 0; i < stars.length; i++) {
-                    const a = stars[i]
-                    const dCurA = Math.hypot(a.x - cursor.x, a.y - cursor.y)
-                    if (dCurA > linkRadius * 1.2) continue // only near cursor
-                    for (let j = i + 1; j < stars.length; j++) {
-                        const b = stars[j]
-                        const dCurB = Math.hypot(b.x - cursor.x, b.y - cursor.y)
-                        if (dCurB > linkRadius * 1.2) continue
-                        const dAB = Math.hypot(a.x - b.x, a.y - b.y)
-                        if (dAB < starLinkRadius) {
-                            const proximity = Math.min(dCurA, dCurB) / (linkRadius * 1.2)
-                            const alpha = (1 - dAB / starLinkRadius) * (1 - proximity) * 0.18
+                // --- Star-to-star lines (very subtle violet web) ---
+                let starLinkCount = 0
+                for (let i = 0; i < connected.length && starLinkCount < MAX_STAR_LINKS; i++) {
+                    const a = connected[i]
+                    for (let j = i + 1; j < connected.length && starLinkCount < MAX_STAR_LINKS; j++) {
+                        const b = connected[j]
+                        const dAB = Math.hypot(a.star.x - b.star.x, a.star.y - b.star.y)
+                        if (dAB < STAR_LINK_RADIUS) {
+                            const alpha = (1 - dAB / STAR_LINK_RADIUS) * 0.12
                             ctx.strokeStyle = `rgba(155,134,255,${alpha})`
-                            ctx.lineWidth = 0.5
+                            ctx.lineWidth = 0.4
                             ctx.beginPath()
-                            ctx.moveTo(a.x, a.y)
-                            ctx.lineTo(b.x, b.y)
+                            ctx.moveTo(a.star.x, a.star.y)
+                            ctx.lineTo(b.star.x, b.star.y)
                             ctx.stroke()
+                            starLinkCount++
                         }
                     }
                 }

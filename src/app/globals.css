@@ -1308,24 +1308,9 @@ footer {
 /* =====================================================================
    Motion CSS
    ===================================================================== */
+/* Cursor glow is now drawn on the constellation canvas — no DOM element needed */
 .cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  margin: -14px 0 0 -14px;
-  background: radial-gradient(circle,
-      rgba(255, 248, 231, 0.95) 0%,
-      rgba(230, 210, 163, 0.7) 15%,
-      rgba(201, 169, 106, 0.35) 30%,
-      rgba(201, 169, 106, 0.1) 50%,
-      transparent 70%);
-  filter: blur(1.5px);
-  animation: cursor-glow-pulse 2.4s ease-in-out infinite;
+  display: none !important;
 }
 
 @keyframes cursor-glow-pulse {
@@ -1355,11 +1340,11 @@ footer {
 .constellation-canvas {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
   pointer-events: none;
-  z-index: 1;
-  mix-blend-mode: screen;
+  z-index: 9998;
 }
 
 @media (pointer: coarse) {
@@ -1947,14 +1932,7 @@ footer {
 
 /* ── Cursor dot (duplicate removed — defined above in Motion CSS) ── */
 
-/* ── Constellation canvas ── */
-.constellation-canvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.6;
-}
+/* ── Constellation canvas (main definition above in Motion CSS) ── */
 
 /* ── TiltCard ── */
 .tilt-card {
