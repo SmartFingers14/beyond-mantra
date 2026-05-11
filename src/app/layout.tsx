@@ -91,6 +91,43 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
+        {/* ── Two Flames Loader ── fires before React hydrates, pure inline HTML/CSS/JS */}
+        <div id="bm-loader" dangerouslySetInnerHTML={{
+          __html: `
+<style>
+#bm-loader{position:fixed;inset:0;z-index:99999;background:#050308;display:flex;align-items:center;justify-content:center;pointer-events:all;transition:opacity 0.7s ease}
+#bm-loader.fade-out{opacity:0;pointer-events:none}
+.bml-scene{position:relative;width:260px;height:260px;display:flex;align-items:center;justify-content:center}
+.bml-orb{position:absolute;width:110px;height:110px;border-radius:50%;top:50%;left:50%;margin:-55px 0 0 -55px;filter:blur(8px);animation:bml-breath 2.4s ease-in-out infinite}
+.bml-shiva{background:radial-gradient(circle,rgba(220,210,255,.95) 0%,rgba(140,100,255,.8) 35%,rgba(100,60,220,.4) 65%,transparent 90%);box-shadow:0 0 40px 16px rgba(124,92,255,.55),0 0 90px 36px rgba(100,60,220,.2);animation:bml-breath 2.4s ease-in-out infinite,bml-move-left 2.2s cubic-bezier(.4,0,.2,1) forwards}
+.bml-shakti{background:radial-gradient(circle,rgba(255,245,200,.95) 0%,rgba(220,170,80,.8) 35%,rgba(180,120,40,.4) 65%,transparent 90%);box-shadow:0 0 40px 16px rgba(201,169,106,.6),0 0 90px 36px rgba(180,130,50,.2);mix-blend-mode:screen;animation:bml-breath 2.4s ease-in-out infinite,bml-move-right 2.2s cubic-bezier(.4,0,.2,1) forwards}
+.bml-merge{position:absolute;width:200px;height:200px;border-radius:50%;top:50%;left:50%;margin:-100px 0 0 -100px;background:radial-gradient(circle,rgba(255,250,230,.55) 0%,rgba(200,170,255,.3) 28%,rgba(124,92,255,.12) 55%,transparent 80%);filter:blur(18px);mix-blend-mode:screen;opacity:0;animation:bml-merge-in 0.8s ease-out 2s forwards}
+@keyframes bml-breath{0%,100%{transform:scale(.95)}50%{transform:scale(1.05)}}
+@keyframes bml-move-left{0%{transform:translateX(-90px) scale(.95)}100%{transform:translateX(0) scale(1)}}
+@keyframes bml-move-right{0%{transform:translateX(90px) scale(.95)}100%{transform:translateX(0) scale(1)}}
+@keyframes bml-merge-in{0%{opacity:0;transform:scale(.7)}100%{opacity:1;transform:scale(1)}}
+</style>
+<div class="bml-scene">
+  <span class="bml-orb bml-shiva"></span>
+  <span class="bml-orb bml-shakti"></span>
+  <span class="bml-merge"></span>
+</div>
+<script>
+(function(){
+  function dismiss(){
+    var el=document.getElementById('bm-loader');
+    if(!el)return;
+    el.classList.add('fade-out');
+    setTimeout(function(){el.remove()},750);
+  }
+  // Dismiss after page load + minimum 2.8s so the merge animation completes
+  var minDone=false,pageDone=false;
+  setTimeout(function(){minDone=true;if(pageDone)dismiss()},2800);
+  if(document.readyState==='complete'){pageDone=true;if(minDone)dismiss();}
+  else{window.addEventListener('load',function(){pageDone=true;if(minDone)dismiss();},{once:true});}
+})();
+</script>
+` }} />
         <LenisProvider>
           <StarField />
           <Header />

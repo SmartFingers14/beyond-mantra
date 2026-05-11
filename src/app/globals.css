@@ -19,6 +19,18 @@
 
 * {
   box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Allow selection only in form inputs */
+input,
+textarea,
+select {
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 html,
