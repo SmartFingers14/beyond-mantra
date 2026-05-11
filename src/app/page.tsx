@@ -121,22 +121,16 @@ export default function Home() {
         />
         <div className="hero-scrim" />
         <div className="hero-content">
+          <span className="eyebrow">✦ &nbsp; A Modern Spiritual System</span>
           <SplitText
-            text="✦   A Modern Spiritual System"
-            as="span"
-            className="eyebrow"
-            delay={0.2}
-            stagger={0.03}
-          />
-          <SplitText
-            text="You are not searching."
+            text="Where two souls become"
             as="h1"
             className="display-glow"
             delay={0.4}
             stagger={0.05}
           />
           <SplitText
-            text="You are remembering."
+            text="one cosmic voice."
             as="h1"
             className="display-glow display-glow--em"
             delay={0.65}
@@ -153,7 +147,7 @@ export default function Home() {
               </Link>
             </MagneticButton>
             <MagneticButton>
-              <Link href="/about" className="btn btn-ghost">Our Philosophy</Link>
+              <Link href="/about" className="btn btn-ghost">Our Story</Link>
             </MagneticButton>
           </BlurReveal>
           <BlurReveal delay={1.25}>
