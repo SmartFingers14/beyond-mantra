@@ -1141,7 +1141,7 @@ footer {
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  animation: marquee 36s linear infinite, marquee-shimmer 6s ease-in-out infinite;
+  animation: marquee 20s linear infinite, marquee-shimmer 6s ease-in-out infinite;
 }
 
 .marquee em.star {

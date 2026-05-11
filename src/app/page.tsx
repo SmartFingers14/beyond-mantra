@@ -168,22 +168,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── Stats strip ── */}
-      <section className="stats-strip">
-        <div className="container">
-          <div className="stats-grid">
-            {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 0.07}>
-                <div className="stat-item">
-                  <span className="stat-value">{s.value}</span>
-                  <span className="stat-label">{s.label}</span>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── Split intro ── */}
       <section className="section">
         <div className="container split">
