@@ -2988,6 +2988,17 @@ footer {
   background: #08060e;
   color: #ece7d8;
   font-family: var(--sans);
+  position: relative;
+  z-index: 10000;
+}
+
+/* Hide site chrome on admin pages */
+body:has(.adm-wrap) .site-header,
+body:has(.adm-wrap) .site-footer,
+body:has(.adm-wrap) .starfield,
+body:has(.adm-wrap) .constellation-canvas,
+body:has(.adm-wrap) .wa-float {
+  display: none !important;
 }
 
 .adm-loading {
