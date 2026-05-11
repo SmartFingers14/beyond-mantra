@@ -114,17 +114,31 @@ export default function RootLayout({
 </div>
 <script>
 (function(){
+  var dismissed=false;
   function dismiss(){
+    if(dismissed)return;
+    dismissed=true;
     var el=document.getElementById('bm-loader');
     if(!el)return;
     el.classList.add('fade-out');
-    setTimeout(function(){el.remove()},750);
+    setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},800);
   }
-  // Dismiss after page load + minimum 2.8s so the merge animation completes
+  // Minimum display: 2.8s (so merge animation completes)
+  // Hard cap: 6s — if page never fires 'load' (slow network, blocked resource), dismiss anyway
   var minDone=false,pageDone=false;
-  setTimeout(function(){minDone=true;if(pageDone)dismiss()},2800);
-  if(document.readyState==='complete'){pageDone=true;if(minDone)dismiss();}
-  else{window.addEventListener('load',function(){pageDone=true;if(minDone)dismiss();},{once:true});}
+  var minTimer=setTimeout(function(){minDone=true;if(pageDone)dismiss();},2800);
+  var hardCap=setTimeout(function(){dismiss();},6000);
+  function onPageReady(){
+    pageDone=true;
+    if(minDone)dismiss();
+  }
+  // DOMContentLoaded fires earlier than 'load' — use as secondary trigger
+  if(document.readyState==='complete'||document.readyState==='interactive'){
+    onPageReady();
+  } else {
+    document.addEventListener('DOMContentLoaded',onPageReady,{once:true});
+    window.addEventListener('load',onPageReady,{once:true});
+  }
 })();
 </script>
 ` }} />
