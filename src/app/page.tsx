@@ -16,19 +16,27 @@ const marqueeItems = [
 const pillars = [
   {
     num: '01', glyph: '☉', title: 'The Map',
-    body: 'Vedic astrology reads your birth chart as a cosmic blueprint — the timing, the dharma, the doors that are already open.',
+    tag: 'Vedic Astrology',
+    body: 'Your birth chart is not a prediction — it is a blueprint. We read the timing, the dharma, and the doors that are already open for you.',
+    cta: 'Explore The Map',
   },
   {
     num: '02', glyph: '☾', title: 'The Mirror',
-    body: 'Tarot and oracle cards do not predict. They reflect. They show you what you already know but have not yet allowed yourself to see.',
+    tag: 'Tarot & Oracle',
+    body: 'Tarot does not predict. It reflects. It shows you what you already know but have not yet allowed yourself to see.',
+    cta: 'Explore The Mirror',
   },
   {
     num: '03', glyph: '✦', title: 'The Method',
-    body: 'Numerology, Vastu and applied alignment — the quiet geometry of your name, your home, your numbers, made usable.',
+    tag: 'Numerology & Vastu',
+    body: 'The quiet geometry of your name, your home, your numbers — made practical, made usable, made yours.',
+    cta: 'Explore The Method',
   },
   {
     num: '04', glyph: '⚭', title: 'The Mystery',
-    body: 'Ritual, remedy and sacred white practice — performed only when the reading calls for it. Never as performance. Always as medicine.',
+    tag: 'Ritual & Remedy',
+    body: 'Sacred white practice — performed only when the reading calls for it. Never as performance. Always as medicine.',
+    cta: 'Explore The Mystery',
   },
 ]
 
@@ -45,6 +53,13 @@ const testimonials = [
     quote: 'I was skeptical. I am not anymore. The numerology report alone changed how I think about my career.',
     name: 'Kavya R.', city: 'Delhi', init: 'K',
   },
+]
+
+const stats = [
+  { value: '14+', label: 'Years of Practice' },
+  { value: '1,200+', label: 'Souls Guided' },
+  { value: '4', label: 'Sacred Systems' },
+  { value: '100%', label: 'Always Returnable' },
 ]
 
 export default function Home() {
@@ -114,17 +129,24 @@ export default function Home() {
             stagger={0.03}
           />
           <SplitText
-            text="You are not searching. You are remembering."
+            text="You are not searching."
             as="h1"
             className="display-glow"
             delay={0.4}
             stagger={0.05}
           />
-          <BlurReveal delay={0.65} as="p" className="lead">
+          <SplitText
+            text="You are remembering."
+            as="h1"
+            className="display-glow display-glow--em"
+            delay={0.65}
+            stagger={0.05}
+          />
+          <BlurReveal delay={0.9} as="p" className="lead">
             Beyond Mantra is born of the oldest duality — Shiva and Shakti, structure and energy,
             the chart and the chant.
           </BlurReveal>
-          <BlurReveal delay={0.85} className="hero-actions">
+          <BlurReveal delay={1.05} className="hero-actions">
             <MagneticButton>
               <Link href="/services" className="btn btn-primary">
                 Step Beyond <span className="arrow">→</span>
@@ -134,7 +156,7 @@ export default function Home() {
               <Link href="/about" className="btn btn-ghost">Our Philosophy</Link>
             </MagneticButton>
           </BlurReveal>
-          <BlurReveal delay={1.1}>
+          <BlurReveal delay={1.25}>
             <AuroraBar />
           </BlurReveal>
         </div>
@@ -152,6 +174,22 @@ export default function Home() {
         </div>
       </div>
 
+      {/* ── Stats strip ── */}
+      <section className="stats-strip">
+        <div className="container">
+          <div className="stats-grid">
+            {stats.map((s, i) => (
+              <Reveal key={s.label} delay={i * 0.07}>
+                <div className="stat-item">
+                  <span className="stat-value">{s.value}</span>
+                  <span className="stat-label">{s.label}</span>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Split intro ── */}
       <section className="section">
         <div className="container split">
@@ -163,16 +201,16 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.12}>
             <h5>The Duality at Our Core</h5>
-            <h2>Two energies. One sanctuary.</h2>
-            <p className="lead" style={{ marginTop: 18 }}>
+            <h2>Two energies.<br />One sanctuary.</h2>
+            <p className="lead" style={{ marginTop: 20 }}>
               We are a husband-and-wife duo — The Architect and The Oracle. He brings the structure
               of Vedic astrology, the precision of numerology, the unmoving math of the cosmos.
               She brings the mirror — tarot, intuition, the question your heart was too scared to ask.
             </p>
-            <p style={{ marginTop: 18 }}>
+            <p style={{ marginTop: 16, color: 'var(--muted)' }}>
               Together, we do not give you answers. We give you the clarity to find your own.
             </p>
-            <div style={{ marginTop: 32 }}>
+            <div style={{ marginTop: 36 }}>
               <Link href="/about" className="link-arrow">
                 Meet the founders <span>→</span>
               </Link>
@@ -180,6 +218,11 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* ── Divider glyph ── */}
+      <div className="section-divider" aria-hidden="true">
+        <span>✦</span>
+      </div>
 
       {/* ── Four Pillars ── */}
       <section className="section">
@@ -191,15 +234,19 @@ export default function Home() {
           </div>
           <div className="services-grid">
             {pillars.map((p, i) => (
-              <TiltCard key={p.title} className="">
+              <TiltCard key={p.title}>
                 <Reveal delay={i * 0.07}>
                   <div className="service-card">
-                    <span className="num">{p.num}</span>
-                    <div style={{ fontSize: 36, color: 'var(--gold)', margin: '14px 0 10px', fontFamily: 'var(--serif)' }}>
-                      {p.glyph}
+                    <div className="service-card__header">
+                      <span className="num">{p.num}</span>
+                      <span className="service-tag">{p.tag}</span>
                     </div>
+                    <div className="service-glyph">{p.glyph}</div>
                     <h3>{p.title}</h3>
                     <p>{p.body}</p>
+                    <Link href="/services" className="service-card__cta">
+                      {p.cta} <span>→</span>
+                    </Link>
                   </div>
                 </Reveal>
               </TiltCard>
@@ -208,14 +255,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── TwoFlames ── */}
-      <section className="section section-narrow" style={{ overflow: 'hidden' }}>
-        <div className="container" style={{ textAlign: 'center' }}>
-          <TwoFlames height={320} />
+      {/* ── TwoFlames interlude ── */}
+      <section className="flames-section">
+        <div className="container flames-inner">
+          <Reveal>
+            <h5 style={{ textAlign: 'center', marginBottom: 8 }}>The Union</h5>
+            <p className="pull-quote" style={{ marginBottom: 40 }}>
+              Where the map ends, the mirror begins.
+            </p>
+          </Reveal>
+          <TwoFlames height={300} />
         </div>
       </section>
 
-      {/* ── Pull quote (PinReveal) ── */}
+      {/* ── Pull quote ── */}
       <section className="section section-narrow">
         <div className="container">
           <PinReveal
@@ -224,6 +277,11 @@ export default function Home() {
           />
         </div>
       </section>
+
+      {/* ── Divider glyph ── */}
+      <div className="section-divider" aria-hidden="true">
+        <span>✦</span>
+      </div>
 
       {/* ── Testimonials ── */}
       <section className="section">
@@ -256,13 +314,18 @@ export default function Home() {
       <section className="cta-band">
         <div className="container">
           <Reveal>
+            <span className="eyebrow" style={{ display: 'inline-block', marginBottom: 24 }}>Begin Here</span>
             <h2>The cosmos has been waiting.</h2>
             <p>Every reading is held by both of us — the Architect and the Oracle — because no soul deserves a half-answer.</p>
-            <div className="hero-actions" style={{ justifyContent: 'center' }}>
-              <Link href="/services" className="btn btn-primary">
-                Explore Services <span className="arrow">→</span>
-              </Link>
-              <Link href="/contact" className="btn btn-ghost">Book a Reading</Link>
+            <div className="hero-actions" style={{ justifyContent: 'center', marginTop: 40 }}>
+              <MagneticButton>
+                <Link href="/services" className="btn btn-primary">
+                  Explore Services <span className="arrow">→</span>
+                </Link>
+              </MagneticButton>
+              <MagneticButton>
+                <Link href="/contact" className="btn btn-ghost">Book a Reading</Link>
+              </MagneticButton>
             </div>
           </Reveal>
         </div>

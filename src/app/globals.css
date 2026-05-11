@@ -1738,6 +1738,174 @@ footer {
 }
 
 /* =====================================================================
+   Stats Strip
+   ===================================================================== */
+
+.stats-strip {
+  padding: 60px 0;
+  border-top: 1px solid var(--line-2);
+  border-bottom: 1px solid var(--line-2);
+  background: linear-gradient(180deg, rgba(124, 92, 255, 0.04), transparent);
+  position: relative;
+  z-index: 1;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 24px;
+  border-right: 1px solid var(--line-2);
+  text-align: center;
+}
+
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-value {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400;
+  line-height: 1;
+  background: linear-gradient(180deg, #fff 0%, var(--gold) 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -1px;
+}
+
+.stat-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-item:nth-child(2) {
+    border-right: none;
+  }
+
+  .stat-item:nth-child(3) {
+    border-right: 1px solid var(--line-2);
+    border-top: 1px solid var(--line-2);
+  }
+
+  .stat-item:nth-child(4) {
+    border-top: 1px solid var(--line-2);
+  }
+}
+
+/* =====================================================================
+   Section Divider
+   ===================================================================== */
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+  max-width: 400px;
+}
+
+.section-divider span {
+  color: var(--gold);
+  font-size: 14px;
+  padding: 0 24px;
+  opacity: 0.7;
+}
+
+/* =====================================================================
+   Service Card Enhancements
+   ===================================================================== */
+
+.service-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.service-tag {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--violet-soft);
+  background: rgba(124, 92, 255, 0.1);
+  border: 1px solid rgba(124, 92, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.service-glyph {
+  font-family: var(--serif);
+  font-size: 42px;
+  color: var(--gold);
+  line-height: 1;
+  margin: 18px 0 14px;
+  text-shadow: 0 0 30px rgba(201, 169, 106, 0.4);
+}
+
+.service-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.8;
+  transition: opacity 0.3s, gap 0.3s;
+}
+
+.service-card__cta:hover {
+  opacity: 1;
+  gap: 12px;
+}
+
+/* =====================================================================
+   Flames Section
+   ===================================================================== */
+
+.flames-section {
+  padding: 80px 0;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 50%, rgba(124, 92, 255, 0.06), transparent 70%);
+}
+
+.flames-inner {
+  text-align: center;
+}
+
+/* =====================================================================
    Motion Primitives CSS
    Styles for: TiltCard, TwoFlames, BeamReveal, RouteCurtain,
                CursorDot, ConstellationCanvas, KenBurns, MarqueeShimmer
