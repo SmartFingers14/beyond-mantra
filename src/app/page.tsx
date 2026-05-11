@@ -168,6 +168,19 @@ export default function Home() {
         </div>
       </div>
 
+      {/* ── TwoFlames interlude ── */}
+      <section className="flames-section">
+        <div className="container flames-inner">
+          <Reveal>
+            <h5 style={{ textAlign: 'center', marginBottom: 8 }}>The Union</h5>
+            <p className="pull-quote" style={{ marginBottom: 40 }}>
+              Where the map ends, the mirror begins.
+            </p>
+          </Reveal>
+          <TwoFlames height={300} />
+        </div>
+      </section>
+
       {/* ── Split intro ── */}
       <section className="section">
         <div className="container split">
@@ -230,19 +243,6 @@ export default function Home() {
               </TiltCard>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── TwoFlames interlude ── */}
-      <section className="flames-section">
-        <div className="container flames-inner">
-          <Reveal>
-            <h5 style={{ textAlign: 'center', marginBottom: 8 }}>The Union</h5>
-            <p className="pull-quote" style={{ marginBottom: 40 }}>
-              Where the map ends, the mirror begins.
-            </p>
-          </Reveal>
-          <TwoFlames height={300} />
         </div>
       </section>
 
