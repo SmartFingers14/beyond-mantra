@@ -387,14 +387,15 @@ export function TwoFlames({ height = 480, className = '' }: TwoFlamesProps) {
     const ref = useRef<HTMLDivElement>(null)
     const { scrollYProgress } = useScroll({
         target: ref,
-        offset: ['start 85%', 'end 15%'],
+        // Section enters viewport at top → flames meet when section is centred
+        offset: ['start end', 'center center'],
     })
-    // Start far apart (-38% / +38%), come together at center
-    const xLeft = useTransform(scrollYProgress, [0, 0.65], ['-38%', '0%'])
-    const xRight = useTransform(scrollYProgress, [0, 0.65], ['38%', '0%'])
-    const glow = useTransform(scrollYProgress, [0, 0.5, 0.9], [0.7, 1.0, 0.9])
+    // Start far apart (-38% / +38%), fully merged by the time section hits viewport centre
+    const xLeft = useTransform(scrollYProgress, [0, 1], ['-38%', '0%'])
+    const xRight = useTransform(scrollYProgress, [0, 1], ['38%', '0%'])
+    const glow = useTransform(scrollYProgress, [0, 0.6, 1], [0.7, 1.0, 0.9])
     const yBreath = useTransform(scrollYProgress, [0, 1], ['-3%', '3%'])
-    const mergeOpacity = useTransform(scrollYProgress, [0.55, 0.75], [0, 1])
+    const mergeOpacity = useTransform(scrollYProgress, [0.7, 0.9], [0, 1])
 
     return (
         <div ref={ref} className={`two-flames ${className}`} style={{ height }}>
