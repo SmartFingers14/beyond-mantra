@@ -455,10 +455,12 @@ export function ConstellationCursor({ density = 0.00018, linkRadius = 200 }: Con
         const mouse = { x: -9999, y: -9999 }
         // Smooth cursor position (lerped)
         const cursor = { x: -9999, y: -9999 }
+        let scrollY = 0
         let raf: number
         const MAX_CURSOR_LINES = 6  // only connect to nearest 6 stars
         const STAR_LINK_RADIUS = 100 // star-to-star distance
         const MAX_STAR_LINKS = 8     // cap inter-star lines
+        const SCROLL_PARALLAX = 0.15 // how much stars drift on scroll
 
         const resize = () => {
             const dpr = window.devicePixelRatio || 1
@@ -481,6 +483,8 @@ export function ConstellationCursor({ density = 0.00018, linkRadius = 200 }: Con
 
         const onMove = (e: MouseEvent) => { mouse.x = e.clientX; mouse.y = e.clientY }
         const onLeave = () => { mouse.x = -9999; mouse.y = -9999 }
+        const onScroll = () => { scrollY = window.scrollY }
+        scrollY = window.scrollY
 
         let t0 = performance.now()
         const loop = (t: number) => {
@@ -500,18 +504,25 @@ export function ConstellationCursor({ density = 0.00018, linkRadius = 200 }: Con
                 cursor.x = -9999; cursor.y = -9999
             }
 
-            // Update + draw stars
+            // Scroll offset for star parallax
+            const scrollOffset = scrollY * SCROLL_PARALLAX
+
+            // Update + draw stars (with scroll parallax)
             for (const s of stars) {
                 s.x += s.vx * dt
                 s.y += s.vy * dt
                 if (s.x < 0 || s.x > W) s.vx *= -1
                 if (s.y < 0 || s.y > H) s.vy *= -1
+                // Rendered position includes scroll parallax
+                const renderY = ((s.y - scrollOffset) % H + H) % H
                 const twinkle = 0.5 + Math.sin(t * 0.0018 + s.phase) * 0.5
                 ctx.globalAlpha = 0.35 * twinkle
                 ctx.fillStyle = '#e6d2a3'
                 ctx.beginPath()
-                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
+                ctx.arc(s.x, renderY, s.r, 0, Math.PI * 2)
                 ctx.fill()
+                    // Store rendered position for line calculations
+                    ; (s as any)._ry = renderY
             }
             ctx.globalAlpha = 1
 
@@ -539,25 +550,26 @@ export function ConstellationCursor({ density = 0.00018, linkRadius = 200 }: Con
                 ctx.arc(cursor.x, cursor.y, 48, 0, Math.PI * 2)
                 ctx.fill()
 
-                // --- Find nearest stars to cursor ---
-                type StarDist = { star: Star; dist: number }
+                // --- Find nearest stars to cursor (using rendered Y) ---
+                type StarDist = { star: Star; dist: number; ry: number }
                 const nearby: StarDist[] = []
                 for (const s of stars) {
-                    const d = Math.hypot(s.x - cursor.x, s.y - cursor.y)
-                    if (d < linkRadius) nearby.push({ star: s, dist: d })
+                    const ry = (s as any)._ry as number
+                    const d = Math.hypot(s.x - cursor.x, ry - cursor.y)
+                    if (d < linkRadius) nearby.push({ star: s, dist: d, ry })
                 }
                 // Sort by distance, take only nearest MAX_CURSOR_LINES
                 nearby.sort((a, b) => a.dist - b.dist)
                 const connected = nearby.slice(0, MAX_CURSOR_LINES)
 
                 // --- Cursor-to-star lines (gold, thin, elegant) ---
-                for (const { star: s, dist: d } of connected) {
+                for (const { star: s, dist: d, ry } of connected) {
                     const alpha = (1 - d / linkRadius) * 0.3
                     ctx.strokeStyle = `rgba(201,169,106,${alpha})`
                     ctx.lineWidth = 0.5
                     ctx.beginPath()
                     ctx.moveTo(cursor.x, cursor.y)
-                    ctx.lineTo(s.x, s.y)
+                    ctx.lineTo(s.x, ry)
                     ctx.stroke()
                 }
 
@@ -567,14 +579,14 @@ export function ConstellationCursor({ density = 0.00018, linkRadius = 200 }: Con
                     const a = connected[i]
                     for (let j = i + 1; j < connected.length && starLinkCount < MAX_STAR_LINKS; j++) {
                         const b = connected[j]
-                        const dAB = Math.hypot(a.star.x - b.star.x, a.star.y - b.star.y)
+                        const dAB = Math.hypot(a.star.x - b.star.x, a.ry - b.ry)
                         if (dAB < STAR_LINK_RADIUS) {
                             const alpha = (1 - dAB / STAR_LINK_RADIUS) * 0.12
                             ctx.strokeStyle = `rgba(155,134,255,${alpha})`
                             ctx.lineWidth = 0.4
                             ctx.beginPath()
-                            ctx.moveTo(a.star.x, a.star.y)
-                            ctx.lineTo(b.star.x, b.star.y)
+                            ctx.moveTo(a.star.x, a.ry)
+                            ctx.lineTo(b.star.x, b.ry)
                             ctx.stroke()
                             starLinkCount++
                         }
@@ -588,11 +600,13 @@ export function ConstellationCursor({ density = 0.00018, linkRadius = 200 }: Con
 
         window.addEventListener('mousemove', onMove)
         window.addEventListener('mouseleave', onLeave)
+        window.addEventListener('scroll', onScroll, { passive: true })
         window.addEventListener('resize', resize)
         return () => {
             cancelAnimationFrame(raf)
             window.removeEventListener('mousemove', onMove)
             window.removeEventListener('mouseleave', onLeave)
+            window.removeEventListener('scroll', onScroll)
             window.removeEventListener('resize', resize)
         }
     }, [density, linkRadius])
