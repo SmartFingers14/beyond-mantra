@@ -1915,3 +1915,266 @@ footer {
     background-position: -200% center;
   }
 }
+
+/* =====================================================================
+   Cosmic Orb — full-width cinematic planet with ring
+   Placed between hero and marquee
+   ===================================================================== */
+
+.cosmic-orb-band {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  /* Fade edges into the page */
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.6) 8%,
+      black 20%,
+      black 80%,
+      rgba(0, 0, 0, 0.6) 92%,
+      transparent 100%);
+  mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.6) 8%,
+      black 20%,
+      black 80%,
+      rgba(0, 0, 0, 0.6) 92%,
+      transparent 100%);
+}
+
+.cosmic-orb-scene {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Outer ambient nebula glow */
+.cosmic-orb__ambient {
+  position: absolute;
+  width: 700px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%,
+      rgba(124, 92, 255, 0.22) 0%,
+      rgba(80, 50, 180, 0.12) 35%,
+      rgba(30, 10, 60, 0.06) 65%,
+      transparent 80%);
+  filter: blur(30px);
+  animation: orb-ambient-pulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes orb-ambient-pulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+/* Ring shadow (behind sphere — rendered first) */
+.cosmic-orb__ring-shadow {
+  position: absolute;
+  width: 480px;
+  height: 60px;
+  border-radius: 50%;
+  background: transparent;
+  border: 28px solid rgba(60, 40, 120, 0.55);
+  transform: rotateX(72deg) translateY(10px);
+  filter: blur(6px);
+  z-index: 1;
+}
+
+/* The sphere */
+.cosmic-orb__sphere {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  z-index: 3;
+  background: radial-gradient(circle at 38% 35%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(200, 185, 255, 0.85) 12%,
+      rgba(140, 110, 255, 0.75) 28%,
+      rgba(90, 60, 200, 0.7) 50%,
+      rgba(50, 25, 120, 0.85) 72%,
+      rgba(15, 5, 40, 0.95) 90%);
+  box-shadow:
+    0 0 60px 20px rgba(124, 92, 255, 0.35),
+    0 0 120px 50px rgba(80, 50, 180, 0.2),
+    inset -30px -20px 60px rgba(0, 0, 0, 0.6),
+    inset 20px 15px 40px rgba(200, 185, 255, 0.15);
+  animation: orb-float 7s ease-in-out infinite;
+}
+
+@keyframes orb-float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Inner atmosphere shimmer */
+.cosmic-orb__sphere-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 65%,
+      transparent 40%,
+      rgba(80, 50, 180, 0.3) 65%,
+      rgba(30, 10, 80, 0.5) 85%);
+  animation: orb-rotate 20s linear infinite;
+}
+
+@keyframes orb-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Specular highlight */
+.cosmic-orb__sphere-highlight {
+  position: absolute;
+  top: 14%;
+  left: 18%;
+  width: 38%;
+  height: 28%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 40% 40%,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(220, 210, 255, 0.2) 50%,
+      transparent 80%);
+  filter: blur(4px);
+}
+
+/* Ring in front of sphere */
+.cosmic-orb__ring {
+  position: absolute;
+  width: 480px;
+  height: 60px;
+  border-radius: 50%;
+  background: transparent;
+  border: 22px solid transparent;
+  border-top-color: rgba(140, 110, 220, 0.65);
+  border-bottom-color: rgba(100, 75, 180, 0.45);
+  transform: rotateX(72deg);
+  z-index: 5;
+  box-shadow:
+    0 -4px 20px rgba(124, 92, 255, 0.3),
+    0 4px 20px rgba(80, 50, 180, 0.2);
+  animation: orb-float 7s ease-in-out infinite;
+}
+
+/* Small companion star (top-right) */
+.cosmic-orb__companion {
+  position: absolute;
+  top: 8%;
+  right: -28%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #e6d2a3 0%, rgba(201, 169, 106, 0.4) 60%, transparent 80%);
+  box-shadow: 0 0 16px 6px rgba(201, 169, 106, 0.5), 0 0 40px 14px rgba(201, 169, 106, 0.2);
+  animation: companion-pulse 5s ease-in-out infinite;
+  z-index: 4;
+}
+
+@keyframes companion-pulse {
+
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* Scattered micro-stars background */
+.cosmic-orb__stars {
+  position: absolute;
+  inset: -80px;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 28% 72%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 55% 12%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 72% 55%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 88% 30%, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 18% 88%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 92% 78%, rgba(230, 210, 163, 0.7), transparent),
+    radial-gradient(1px 1px at 42% 42%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 65% 85%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 8% 50%, rgba(255, 255, 255, 0.4), transparent);
+  pointer-events: none;
+  z-index: 0;
+  animation: stars-twinkle 6s ease-in-out infinite;
+}
+
+@keyframes stars-twinkle {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .cosmic-orb-band {
+    height: 320px;
+  }
+
+  .cosmic-orb-scene {
+    width: 220px;
+    height: 220px;
+  }
+
+  .cosmic-orb__sphere {
+    width: 160px;
+    height: 160px;
+  }
+
+  .cosmic-orb__ring,
+  .cosmic-orb__ring-shadow {
+    width: 320px;
+    height: 40px;
+  }
+
+  .cosmic-orb__ambient {
+    width: 460px;
+    height: 260px;
+  }
+
+  .cosmic-orb__companion {
+    width: 12px;
+    height: 12px;
+    right: -18%;
+  }
+}

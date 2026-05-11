@@ -140,6 +140,27 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Cosmic Orb ── */}
+      <div className="cosmic-orb-band" aria-hidden="true">
+        <div className="cosmic-orb-scene">
+          {/* Outer ambient glow */}
+          <div className="cosmic-orb__ambient" />
+          {/* Ring shadow behind sphere */}
+          <div className="cosmic-orb__ring-shadow" />
+          {/* The sphere */}
+          <div className="cosmic-orb__sphere">
+            <div className="cosmic-orb__sphere-inner" />
+            <div className="cosmic-orb__sphere-highlight" />
+          </div>
+          {/* Ring in front */}
+          <div className="cosmic-orb__ring" />
+          {/* Small companion star */}
+          <div className="cosmic-orb__companion" />
+          {/* Scattered micro-stars */}
+          <div className="cosmic-orb__stars" />
+        </div>
+      </div>
+
       {/* ── Marquee ── */}
       <div className="marquee" aria-hidden="true">
         <div className="marquee-track">
