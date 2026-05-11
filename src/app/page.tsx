@@ -2,9 +2,9 @@
 
 import { useRef, useEffect } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import AuroraBar from '@/components/AuroraBar'
 import Reveal from '@/components/Reveal'
+import { SplitText, BlurReveal, TwoFlames, PinReveal, TiltCard, MagneticButton } from '@/components/motion'
 
 const marqueeItems = [
   'The Map', 'The Mirror', 'The Method', 'The Mystery',
@@ -106,45 +106,37 @@ export default function Home() {
         />
         <div className="hero-scrim" />
         <div className="hero-content">
-          <motion.span
+          <SplitText
+            text="✦   A Modern Spiritual System"
+            as="span"
             className="eyebrow"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}>
-            ✦ &nbsp; A Modern Spiritual System
-          </motion.span>
-          <motion.h1
+            delay={0.2}
+            stagger={0.03}
+          />
+          <SplitText
+            text="You are not searching. You are remembering."
+            as="h1"
             className="display-glow"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.4 }}>
-            You are not searching.<br />
-            <em className="display-glow--em">You are remembering.</em>
-          </motion.h1>
-          <motion.p
-            className="lead"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.65 }}>
+            delay={0.4}
+            stagger={0.05}
+          />
+          <BlurReveal delay={0.65} as="p" className="lead">
             Beyond Mantra is born of the oldest duality — Shiva and Shakti, structure and energy,
             the chart and the chant.
-          </motion.p>
-          <motion.div
-            className="hero-actions"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.85 }}>
-            <Link href="/services" className="btn btn-primary">
-              Step Beyond <span className="arrow">→</span>
-            </Link>
-            <Link href="/about" className="btn btn-ghost">Our Philosophy</Link>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.1 }}>
+          </BlurReveal>
+          <BlurReveal delay={0.85} className="hero-actions">
+            <MagneticButton>
+              <Link href="/services" className="btn btn-primary">
+                Step Beyond <span className="arrow">→</span>
+              </Link>
+            </MagneticButton>
+            <MagneticButton>
+              <Link href="/about" className="btn btn-ghost">Our Philosophy</Link>
+            </MagneticButton>
+          </BlurReveal>
+          <BlurReveal delay={1.1}>
             <AuroraBar />
-          </motion.div>
+          </BlurReveal>
         </div>
       </section>
 
@@ -199,30 +191,37 @@ export default function Home() {
           </div>
           <div className="services-grid">
             {pillars.map((p, i) => (
-              <Reveal key={p.title} delay={i * 0.07}>
-                <div className="service-card">
-                  <span className="num">{p.num}</span>
-                  <div style={{ fontSize: 36, color: 'var(--gold)', margin: '14px 0 10px', fontFamily: 'var(--serif)' }}>
-                    {p.glyph}
+              <TiltCard key={p.title} className="">
+                <Reveal delay={i * 0.07}>
+                  <div className="service-card">
+                    <span className="num">{p.num}</span>
+                    <div style={{ fontSize: 36, color: 'var(--gold)', margin: '14px 0 10px', fontFamily: 'var(--serif)' }}>
+                      {p.glyph}
+                    </div>
+                    <h3>{p.title}</h3>
+                    <p>{p.body}</p>
                   </div>
-                  <h3>{p.title}</h3>
-                  <p>{p.body}</p>
-                </div>
-              </Reveal>
+                </Reveal>
+              </TiltCard>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Pull quote ── */}
+      {/* ── TwoFlames ── */}
+      <section className="section section-narrow" style={{ overflow: 'hidden' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <TwoFlames height={320} />
+        </div>
+      </section>
+
+      {/* ── Pull quote (PinReveal) ── */}
       <section className="section section-narrow">
         <div className="container">
-          <Reveal>
-            <p className="pull-quote">
-              &ldquo;The chart does not tell you what will happen.<br />
-              It tells you who you already are.&rdquo;
-            </p>
-          </Reveal>
+          <PinReveal
+            text="The chart does not tell you what will happen. It tells you who you already are."
+            className="pull-quote"
+          />
         </div>
       </section>
 

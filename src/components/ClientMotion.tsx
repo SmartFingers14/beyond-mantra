@@ -1,39 +1,20 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { CursorFollower, ConstellationCursor } from '@/components/motion'
 
-/** Custom gold cursor dot — desktop only */
-function CursorDot() {
-    const dotRef = useRef<HTMLDivElement>(null)
-
-    useEffect(() => {
-        const dot = dotRef.current
-        if (!dot) return
-
-        let x = 0, y = 0
-        let cx = 0, cy = 0
-        let raf = 0
-
-        const onMove = (e: MouseEvent) => { x = e.clientX; y = e.clientY }
-        window.addEventListener('mousemove', onMove)
-
-        const tick = () => {
-            cx += (x - cx) * 0.18
-            cy += (y - cy) * 0.18
-            dot.style.transform = `translate(${cx}px, ${cy}px)`
-            raf = requestAnimationFrame(tick)
-        }
-        raf = requestAnimationFrame(tick)
-
-        return () => {
-            window.removeEventListener('mousemove', onMove)
-            cancelAnimationFrame(raf)
-        }
-    }, [])
-
-    return <div className="cursor-dot" ref={dotRef} aria-hidden="true" />
-}
-
+/**
+ * ClientMotion — mounts all global client-side motion effects:
+ *   • CursorFollower      (framer-motion spring dot)
+ *   • ConstellationCursor (canvas stars + gold lines)
+ *
+ * RouteCurtain is handled separately in RouteCurtainWrapper
+ * because it needs usePathname (also a client hook).
+ */
 export default function ClientMotion() {
-    return <CursorDot />
+    return (
+        <>
+            <CursorFollower />
+            <ConstellationCursor />
+        </>
+    )
 }

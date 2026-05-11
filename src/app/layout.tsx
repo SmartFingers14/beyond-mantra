@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import StarField from '@/components/StarField'
 import LenisProvider from '@/components/LenisProvider'
 import ClientMotion from '@/components/ClientMotion'
+import RouteCurtainWrapper from '@/components/RouteCurtainWrapper'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -95,6 +96,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
           <ClientMotion />
+          <RouteCurtainWrapper />
           {/* WhatsApp float */}
           <a
             href="https://wa.me/919999999999"
