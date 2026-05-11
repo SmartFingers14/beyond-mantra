@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -112,6 +113,7 @@ export default function RootLayout({
           </a>
         </LenisProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
