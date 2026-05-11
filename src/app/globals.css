@@ -644,6 +644,15 @@ footer {
   z-index: 1;
 }
 
+/* Hero video section must start at top:0 so video fills behind the transparent header */
+.hero--video {
+  position: relative;
+  z-index: 1;
+  /* Negative margin pulls the hero up to sit behind the fixed header */
+  margin-top: -88px;
+  padding-top: 0;
+}
+
 .section,
 .cta-band,
 .marquee {
@@ -658,6 +667,8 @@ footer {
   align-items: center;
   padding: 140px 0 80px;
   overflow: hidden;
+  /* Pull hero up so it starts at top of viewport, behind fixed header */
+  margin-top: 0;
 }
 
 .hero .container {
@@ -677,6 +688,8 @@ footer {
   align-items: center;
   justify-content: center;
   text-align: center;
+  /* Extend hero behind the fixed header so video fills the full viewport including header area */
+  margin-top: 0;
 }
 
 .hero--video .hero-video {
