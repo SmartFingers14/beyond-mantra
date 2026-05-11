@@ -93,7 +93,7 @@ export default function RootLayout({
         <LenisProvider>
           <StarField />
           <Header />
-          <main>{children}</main>
+          <main style={{ paddingTop: 0 }}>{children}</main>
           <Footer />
           <ClientMotion />
           <RouteCurtainWrapper />

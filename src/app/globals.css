@@ -667,8 +667,6 @@ footer {
   align-items: center;
   padding: 140px 0 80px;
   overflow: hidden;
-  /* Pull hero up so it starts at top of viewport, behind fixed header */
-  margin-top: 0;
 }
 
 .hero .container {
