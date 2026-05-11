@@ -1910,7 +1910,7 @@ footer {
    ===================================================================== */
 
 .flames-section {
-  padding: 60px 0 80px;
+  padding: 40px 0 0;
   position: relative;
   z-index: 1;
   overflow: visible;
