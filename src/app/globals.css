@@ -412,8 +412,9 @@ p.lead {
 .mobile-menu {
   position: fixed;
   inset: 0;
-  background: rgba(5, 3, 8, .96);
-  backdrop-filter: blur(22px);
+  background: rgba(5, 3, 8, 0.55);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
   z-index: 49;
   display: flex;
   flex-direction: column;
@@ -434,6 +435,7 @@ p.lead {
   font-family: var(--serif);
   font-size: 30px;
   color: #fff;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
 }
 
 /* ----- Starfield stacking ---------------------------------------- */
