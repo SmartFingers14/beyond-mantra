@@ -454,7 +454,7 @@ interface ConstellationCursorProps {
     linkRadius?: number
 }
 
-export function ConstellationCursor({ density = 0.00012, linkRadius = 160 }: ConstellationCursorProps) {
+export function ConstellationCursor({ density = 0.00028, linkRadius = 260 }: ConstellationCursorProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
     useEffect(() => {
@@ -470,6 +470,7 @@ export function ConstellationCursor({ density = 0.00012, linkRadius = 160 }: Con
         let stars: Star[] = []
         const cursor = { x: -9999, y: -9999 }
         let raf: number
+        const starLinkRadius = 110 // star-to-star connection distance
 
         const resize = () => {
             canvas.width = window.innerWidth
@@ -478,9 +479,9 @@ export function ConstellationCursor({ density = 0.00012, linkRadius = 160 }: Con
             stars = Array.from({ length: count }, () => ({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.08,
-                vy: (Math.random() - 0.5) * 0.08,
-                r: Math.random() * 1.2 + 0.3,
+                vx: (Math.random() - 0.5) * 0.06,
+                vy: (Math.random() - 0.5) * 0.06,
+                r: Math.random() * 1.4 + 0.3,
                 phase: Math.random() * Math.PI * 2,
             }))
         }
@@ -495,32 +496,61 @@ export function ConstellationCursor({ density = 0.00012, linkRadius = 160 }: Con
             t0 = t
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
+            // Update + draw stars
             for (const s of stars) {
                 s.x += s.vx * dt
                 s.y += s.vy * dt
                 if (s.x < 0 || s.x > canvas.width) s.vx *= -1
                 if (s.y < 0 || s.y > canvas.height) s.vy *= -1
                 const twinkle = 0.55 + Math.sin(t * 0.002 + s.phase) * 0.45
-                ctx.fillStyle = `rgba(230,210,163,${0.35 * twinkle})`
+                ctx.fillStyle = `rgba(230,210,163,${0.4 * twinkle})`
                 ctx.beginPath()
                 ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
                 ctx.fill()
             }
 
+            // Cursor-to-star lines (gold, more visible)
             for (const s of stars) {
                 const dx = s.x - cursor.x
                 const dy = s.y - cursor.y
                 const d = Math.hypot(dx, dy)
                 if (d < linkRadius) {
-                    const a = (1 - d / linkRadius) * 0.35
+                    const a = (1 - d / linkRadius) * 0.45
                     ctx.strokeStyle = `rgba(201,169,106,${a})`
-                    ctx.lineWidth = 0.7
+                    ctx.lineWidth = 0.8
                     ctx.beginPath()
                     ctx.moveTo(cursor.x, cursor.y)
                     ctx.lineTo(s.x, s.y)
                     ctx.stroke()
                 }
             }
+
+            // Star-to-star lines (subtle web near cursor)
+            const cursorActive = cursor.x > 0 && cursor.y > 0
+            if (cursorActive) {
+                for (let i = 0; i < stars.length; i++) {
+                    const a = stars[i]
+                    const dCurA = Math.hypot(a.x - cursor.x, a.y - cursor.y)
+                    if (dCurA > linkRadius * 1.2) continue // only near cursor
+                    for (let j = i + 1; j < stars.length; j++) {
+                        const b = stars[j]
+                        const dCurB = Math.hypot(b.x - cursor.x, b.y - cursor.y)
+                        if (dCurB > linkRadius * 1.2) continue
+                        const dAB = Math.hypot(a.x - b.x, a.y - b.y)
+                        if (dAB < starLinkRadius) {
+                            const proximity = Math.min(dCurA, dCurB) / (linkRadius * 1.2)
+                            const alpha = (1 - dAB / starLinkRadius) * (1 - proximity) * 0.18
+                            ctx.strokeStyle = `rgba(155,134,255,${alpha})`
+                            ctx.lineWidth = 0.5
+                            ctx.beginPath()
+                            ctx.moveTo(a.x, a.y)
+                            ctx.lineTo(b.x, b.y)
+                            ctx.stroke()
+                        }
+                    }
+                }
+            }
+
             raf = requestAnimationFrame(loop)
         }
         raf = requestAnimationFrame(loop)
