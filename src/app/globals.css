@@ -3904,3 +3904,180 @@ body:has(.adm-wrap) .wa-float {
     padding: 20px 16px;
   }
 }
+
+/* =====================================================================
+   Is This For You? — Soul Portraits Section
+   ===================================================================== */
+
+.ifyou-section {
+  padding: 120px 0 100px;
+}
+
+/* Centred heading block */
+.ifyou-head {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.ifyou-head .eyebrow {
+  margin-bottom: 28px;
+}
+
+.ifyou-head h2 {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 3-col card grid */
+.ifyou-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 72px;
+}
+
+/* Individual soul portrait card */
+.ifyou-card {
+  position: relative;
+  padding: 44px 36px 48px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.015);
+  overflow: hidden;
+  cursor: default;
+  height: 100%;
+  transition: border-color 0.45s ease, box-shadow 0.45s ease;
+}
+
+.ifyou-card:hover {
+  border-color: rgba(201, 169, 106, 0.5);
+  box-shadow:
+    0 0 50px rgba(201, 169, 106, 0.07),
+    0 0 120px rgba(201, 169, 106, 0.03),
+    inset 0 0 60px rgba(201, 169, 106, 0.025);
+}
+
+/* Gold shimmer that radiates from center on hover */
+.ifyou-shimmer {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(ellipse at 50% 50%,
+      rgba(201, 169, 106, 0.14) 0%,
+      rgba(201, 169, 106, 0.05) 35%,
+      transparent 70%);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.ifyou-card:hover .ifyou-shimmer {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Symbol / glyph */
+.ifyou-symbol {
+  font-size: 34px;
+  color: var(--gold);
+  margin-bottom: 18px;
+  line-height: 1;
+  filter: drop-shadow(0 0 12px rgba(201, 169, 106, 0.45));
+  display: block;
+}
+
+/* Archetype label — small caps above title */
+.ifyou-archetype {
+  display: block;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+/* Card heading */
+.ifyou-title {
+  font-family: var(--serif);
+  font-size: clamp(19px, 1.7vw, 25px);
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.25;
+  margin: 0 0 18px;
+  letter-spacing: 0.1px;
+}
+
+/* Card body copy */
+.ifyou-body {
+  font-size: 15.5px;
+  color: var(--muted);
+  line-height: 1.78;
+  margin: 0;
+  opacity: 1;
+}
+
+/* Closing tagline + CTA centred below cards */
+.ifyou-closing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  text-align: center;
+}
+
+.ifyou-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(17px, 1.7vw, 22px);
+  color: var(--gold-soft);
+  max-width: 620px;
+  margin: 0;
+  line-height: 1.65;
+  opacity: 1;
+}
+
+/* ── Responsive ── */
+
+/* Tablet: 2-col with last card spanning full width */
+@media (max-width: 1060px) and (min-width: 641px) {
+  .ifyou-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ifyou-grid>*:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .ifyou-grid>*:last-child .ifyou-card {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+/* Mobile: single column, horizontal scroll hint stripped, full stack */
+@media (max-width: 640px) {
+  .ifyou-section {
+    padding: 80px 0 72px;
+  }
+
+  .ifyou-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 52px;
+  }
+
+  .ifyou-card {
+    padding: 32px 24px 36px;
+  }
+
+  .ifyou-head {
+    margin-bottom: 48px;
+  }
+
+  .ifyou-tagline {
+    font-size: 17px;
+  }
+}

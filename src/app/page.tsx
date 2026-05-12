@@ -85,6 +85,27 @@ const stats = [
   { value: '100%', label: 'Always Returnable' },
 ]
 
+const soulPortraits = [
+  {
+    symbol: '⊹',
+    archetype: 'The Threshold Crosser',
+    title: 'You\'re standing at a crossroads.',
+    body: 'A career to leave or claim. A love to choose or release. A version of yourself trying to be born. You\'ve made every logical list — and still can\'t move. You don\'t need more data. You need a map.',
+  },
+  {
+    symbol: '☽',
+    archetype: 'The Quiet Seeker',
+    title: 'You outgrew shallow spirituality.',
+    body: 'Sun sign posts don\'t satisfy you anymore. You\'ve felt the pull of something older, truer — but you haven\'t found the space that takes it seriously without being heavy. You have now.',
+  },
+  {
+    symbol: '✦',
+    archetype: 'The Successful but Unsettled',
+    title: 'You have everything. And still feel the tug.',
+    body: 'By every measure, life looks right. But there\'s a quiet pull — toward purpose, toward alignment, toward the version of yourself the cosmos always intended. That tug is not confusion. It\'s a calling.',
+  },
+]
+
 export default function Home() {
   const vidARef = useRef<HTMLVideoElement>(null)
   const vidBRef = useRef<HTMLVideoElement>(null)
@@ -190,6 +211,47 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      {/* ── Is This For You? ── */}
+      <section className="section ifyou-section">
+        <div className="container">
+          <div className="section-head ifyou-head">
+            <BlurReveal>
+              <span className="eyebrow">You found this for a reason</span>
+            </BlurReveal>
+            <SplitText
+              text="The sky has been trying to reach you."
+              as="h2"
+              className="display-glow"
+              delay={0.1}
+              stagger={0.04}
+            />
+          </div>
+          <div className="ifyou-grid">
+            {soulPortraits.map((p, i) => (
+              <BlurReveal key={p.archetype} delay={i * 0.15} y={36} blur={10}>
+                <div className="ifyou-card">
+                  <span className="ifyou-shimmer" aria-hidden="true" />
+                  <div className="ifyou-symbol">{p.symbol}</div>
+                  <span className="ifyou-archetype">{p.archetype}</span>
+                  <h3 className="ifyou-title">{p.title}</h3>
+                  <p className="ifyou-body">{p.body}</p>
+                </div>
+              </BlurReveal>
+            ))}
+          </div>
+          <BlurReveal delay={0.55} className="ifyou-closing">
+            <p className="ifyou-tagline">
+              &ldquo;If you read one of these and felt seen — this was always meant to find you.&rdquo;
+            </p>
+            <MagneticButton>
+              <Link href="/services" className="btn btn-ghost">
+                Find Your Path <span className="arrow">→</span>
+              </Link>
+            </MagneticButton>
+          </BlurReveal>
+        </div>
+      </section>
 
       {/* ── TwoFlames interlude ── */}
       <section className="flames-section">
