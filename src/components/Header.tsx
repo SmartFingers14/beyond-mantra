@@ -10,6 +10,7 @@ const links = [
     { href: '/', label: 'Home' },
     { href: '/about', label: 'About' },
     { href: '/services', label: 'Services' },
+    { href: '/calculators', label: 'Calculators' },
     { href: '/journal', label: 'Journal' },
     { href: '/contact', label: 'Contact' },
 ]
@@ -47,8 +48,7 @@ export default function Header() {
                         ))}
                     </ul>
                     <div className="nav-cta">
-                        <Link href="/contact" className="btn btn-ghost">Contact</Link>
-                        <Link href="/services" className="btn btn-primary">
+                        <Link href="/services" className="btn btn-primary btn-sm">
                             Book a Reading <span className="arrow">→</span>
                         </Link>
                     </div>

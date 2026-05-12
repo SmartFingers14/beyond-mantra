@@ -11,6 +11,10 @@ const marqueeItems = [
   'Vedic Astrology', 'Tarot & Oracle', 'Numerology', 'Vastu & Ritual',
   'The Map', 'The Mirror', 'The Method', 'The Mystery',
   'Vedic Astrology', 'Tarot & Oracle', 'Numerology', 'Vastu & Ritual',
+  'The Map', 'The Mirror', 'The Method', 'The Mystery',
+  'Vedic Astrology', 'Tarot & Oracle', 'Numerology', 'Vastu & Ritual',
+  'The Map', 'The Mirror', 'The Method', 'The Mystery',
+  'Vedic Astrology', 'Tarot & Oracle', 'Numerology', 'Vastu & Ritual',
 ]
 
 const pillars = [
@@ -109,37 +113,70 @@ const soulPortraits = [
 export default function Home() {
   const vidARef = useRef<HTMLVideoElement>(null)
   const vidBRef = useRef<HTMLVideoElement>(null)
+  const activeRef = useRef<'a' | 'b'>('a')
+  const fadingRef = useRef(false)
 
   useEffect(() => {
     const vidA = vidARef.current
     const vidB = vidBRef.current
     if (!vidA || !vidB) return
 
-    const crossfade = () => {
-      vidB.currentTime = 0
-      vidB.style.opacity = '0'
-      vidA.style.opacity = '1'
-      vidB.play().catch(() => { })
+    const FADE_DURATION = 1.8 // seconds — crossfade duration
+    const FADE_BEFORE_END = 2.0 // start fading this many seconds before end
+
+    const startCrossfade = () => {
+      if (fadingRef.current) return
+      fadingRef.current = true
+
+      const outgoing = activeRef.current === 'a' ? vidA : vidB
+      const incoming = activeRef.current === 'a' ? vidB : vidA
+
+      // Reset incoming to start and begin playing
+      incoming.currentTime = 0
+      incoming.play().catch(() => { })
 
       let start: number | null = null
-      const dur = 800
+      const durMs = FADE_DURATION * 1000
+
       const fade = (ts: number) => {
         if (!start) start = ts
-        const p = Math.min(1, (ts - start) / dur)
-        vidA.style.opacity = String(1 - p)
-        vidB.style.opacity = String(p)
-        if (p < 1) requestAnimationFrame(fade)
-        else {
-          const tmp = vidARef.current!
-          vidARef.current = vidBRef.current!
-          vidBRef.current = tmp
+        const p = Math.min(1, (ts - start) / durMs)
+        // Smooth ease-in-out for imperceptible transition
+        const ease = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2
+        outgoing.style.opacity = String(1 - ease)
+        incoming.style.opacity = String(ease)
+        if (p < 1) {
+          requestAnimationFrame(fade)
+        } else {
+          // Swap active and pause the now-hidden video
+          activeRef.current = activeRef.current === 'a' ? 'b' : 'a'
+          outgoing.pause()
+          fadingRef.current = false
         }
       }
       requestAnimationFrame(fade)
     }
 
-    vidA.addEventListener('ended', crossfade)
-    return () => vidA.removeEventListener('ended', crossfade)
+    const onTimeUpdate = (e: Event) => {
+      const vid = e.target as HTMLVideoElement
+      // Only trigger for the currently active video
+      if (
+        (activeRef.current === 'a' && vid !== vidA) ||
+        (activeRef.current === 'b' && vid !== vidB)
+      ) return
+
+      if (vid.duration && vid.currentTime >= vid.duration - FADE_BEFORE_END) {
+        startCrossfade()
+      }
+    }
+
+    vidA.addEventListener('timeupdate', onTimeUpdate)
+    vidB.addEventListener('timeupdate', onTimeUpdate)
+
+    return () => {
+      vidA.removeEventListener('timeupdate', onTimeUpdate)
+      vidB.removeEventListener('timeupdate', onTimeUpdate)
+    }
   }, [])
 
   return (
@@ -212,6 +249,19 @@ export default function Home() {
         </div>
       </div>
 
+      {/* ── TwoFlames interlude (The Union) ── */}
+      <section className="flames-section">
+        <div className="container flames-inner">
+          <Reveal>
+            <h5 style={{ textAlign: 'center', marginBottom: 8 }}>The Union</h5>
+            <p className="pull-quote" style={{ marginBottom: 40 }}>
+              Where the map ends, the mirror begins.
+            </p>
+          </Reveal>
+          <TwoFlames height={300} />
+        </div>
+      </section>
+
       {/* ── Is This For You? ── */}
       <section className="section ifyou-section">
         <div className="container">
@@ -250,19 +300,6 @@ export default function Home() {
               </Link>
             </MagneticButton>
           </BlurReveal>
-        </div>
-      </section>
-
-      {/* ── TwoFlames interlude ── */}
-      <section className="flames-section">
-        <div className="container flames-inner">
-          <Reveal>
-            <h5 style={{ textAlign: 'center', marginBottom: 8 }}>The Union</h5>
-            <p className="pull-quote" style={{ marginBottom: 40 }}>
-              Where the map ends, the mirror begins.
-            </p>
-          </Reveal>
-          <TwoFlames height={300} />
         </div>
       </section>
 
@@ -397,6 +434,43 @@ export default function Home() {
                 </div>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Free Vedic Calculators ── */}
+      <section className="section">
+        <div className="container">
+          <div className="section-head">
+            <Reveal>
+              <span className="eyebrow">✦ Free Vedic Tools</span>
+              <h2>Explore Your Cosmic Blueprint</h2>
+              <p className="lead">Eight sacred calculators — from Moon Sign to Kundli Matching — built with real Vedic astronomy. No sign-up needed.</p>
+            </Reveal>
+          </div>
+          <Reveal>
+            <div className="calc-home-grid">
+              {[
+                { glyph: '🔢', title: 'Numerology', href: '/calculators/numerology' },
+                { glyph: '☾', title: 'Moon Sign', href: '/calculators/moon-sign' },
+                { glyph: '✦', title: 'Nakshatra', href: '/calculators/nakshatra' },
+                { glyph: '⬡', title: 'Lagna', href: '/calculators/lagna' },
+                { glyph: '☊', title: 'Rahu Ketu', href: '/calculators/rahu-ketu' },
+                { glyph: '⚭', title: 'Kundli Match', href: '/calculators/kundli-matching' },
+                { glyph: '💒', title: 'Baby Name', href: '/calculators/baby-name' },
+                { glyph: '🔥', title: 'FLAMES', href: '/calculators/flames' },
+              ].map(c => (
+                <Link key={c.href} href={c.href} className="calc-home-card">
+                  <span className="calc-hub-glyph">{c.glyph}</span>
+                  <h4>{c.title}</h4>
+                </Link>
+              ))}
+            </div>
+          </Reveal>
+          <div style={{ textAlign: 'center', marginTop: 40 }}>
+            <MagneticButton>
+              <Link href="/calculators" className="btn btn-ghost">View All Calculators <span className="arrow">→</span></Link>
+            </MagneticButton>
           </div>
         </div>
       </section>

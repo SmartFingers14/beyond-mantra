@@ -421,6 +421,12 @@ p.lead {
   gap: 12px;
 }
 
+.nav-cta .btn.btn-sm {
+  padding: 10px 20px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+
 .burger {
   display: none;
   background: none;
@@ -1132,7 +1138,7 @@ footer {
    Homepage — Flames Interlude Section
    ===================================================================== */
 .flames-section {
-  padding: 40px 0 60px;
+  padding: 40px 0 0;
   position: relative;
   z-index: 1;
 }
@@ -2504,6 +2510,7 @@ footer {
 
 .flames-section {
   padding: 40px 0 0;
+  margin-bottom: -40px;
   position: relative;
   z-index: 1;
   overflow: visible;
@@ -4286,7 +4293,7 @@ body:has(.adm-wrap) .wa-float {
    ===================================================================== */
 
 .ifyou-section {
-  padding: 120px 0 100px;
+  padding: 60px 0 100px;
 }
 
 /* Centred heading block */
@@ -4455,5 +4462,522 @@ body:has(.adm-wrap) .wa-float {
 
   .ifyou-tagline {
     font-size: 17px;
+  }
+}
+
+/* =====================================================================
+   Calculators
+   ===================================================================== */
+
+/* Hub Grid */
+.calc-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.calc-hub-card {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 28px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.calc-hub-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(201, 169, 106, 0.1);
+}
+
+.calc-hub-glyph {
+  font-size: 32px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.calc-hub-title {
+  font-family: var(--serif);
+  font-size: 20px;
+  margin: 0 0 10px;
+  color: var(--gold-soft);
+}
+
+.calc-hub-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  flex: 1;
+  margin: 0;
+}
+
+.calc-hub-cta {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+}
+
+.calc-hub-cta span {
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.calc-hub-card:hover .calc-hub-cta span {
+  transform: translateX(4px);
+}
+
+/* Calculator Forms */
+.calc-form {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 36px 32px;
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.calc-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+.calc-input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: var(--ink);
+  font-size: 16px;
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.calc-input:focus {
+  border-color: var(--gold);
+}
+
+.calc-btn {
+  margin-top: 8px;
+  width: 100%;
+}
+
+/* Calculator Results */
+.calc-result {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 40px 32px;
+  margin-top: 32px;
+}
+
+.calc-result-hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.calc-big-num {
+  font-family: var(--serif);
+  font-size: 72px;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  min-width: 80px;
+  text-align: center;
+}
+
+.calc-result-hero h3 {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: var(--gold-soft);
+  margin: 0 0 6px;
+}
+
+.calc-result-hero p {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.calc-degree {
+  font-size: 14px !important;
+  color: var(--muted) !important;
+  font-family: var(--sans);
+}
+
+.calc-desc {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Stat Grids */
+.calc-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.calc-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.calc-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.calc-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.calc-stat-num {
+  font-family: var(--serif);
+  font-size: 28px;
+  color: var(--gold-soft);
+  margin-bottom: 6px;
+}
+
+.calc-stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Nakshatra Letters */
+.calc-letters {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line-2);
+}
+
+.calc-letters h4 {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+
+.calc-letter-row {
+  display: flex;
+  gap: 12px;
+}
+
+.calc-letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line-2);
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--muted);
+  transition: all 0.3s;
+}
+
+.calc-letter.active {
+  background: rgba(201, 169, 106, 0.12);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 20px rgba(201, 169, 106, 0.15);
+}
+
+/* Rahu/Ketu Node Cards */
+.calc-node-card {
+  padding: 28px 24px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  text-align: center;
+}
+
+.calc-node--rahu {
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.08), rgba(5, 3, 8, 0.5));
+  border-color: rgba(124, 92, 255, 0.2);
+}
+
+.calc-node--ketu {
+  background: linear-gradient(135deg, rgba(201, 169, 106, 0.08), rgba(5, 3, 8, 0.5));
+  border-color: rgba(201, 169, 106, 0.2);
+}
+
+.calc-node-glyph {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.calc-node-card h3 {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.calc-node-sign {
+  font-size: 16px;
+  color: var(--gold-soft);
+  margin: 0 0 4px;
+}
+
+.calc-node-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 12px 0 0;
+}
+
+/* Kundli Matching */
+.calc-match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.calc-match-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.calc-match-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.calc-guna-table {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.calc-guna-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 60px;
+  align-items: center;
+  gap: 16px;
+}
+
+.calc-guna-name {
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.calc-guna-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.calc-guna-bar>div {
+  height: 100%;
+  background: linear-gradient(90deg, var(--violet), var(--gold));
+  border-radius: 3px;
+  transition: width 0.8s ease-out;
+}
+
+.calc-guna-score {
+  font-size: 14px;
+  color: var(--gold-soft);
+  text-align: right;
+  font-family: var(--serif);
+}
+
+/* FLAMES */
+.calc-flames-result {
+  text-align: center;
+}
+
+.calc-flames-emoji {
+  font-size: 64px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.calc-flames-label {
+  font-family: var(--serif);
+  font-size: 42px;
+  color: var(--gold);
+  margin: 0 0 16px;
+}
+
+.calc-flames-strip {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.calc-flames-letter {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line-2);
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all 0.3s;
+}
+
+.calc-flames-letter.active {
+  background: rgba(201, 169, 106, 0.15);
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 24px rgba(201, 169, 106, 0.2);
+  transform: scale(1.15);
+}
+
+/* Link arrow */
+.link-arrow {
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.link-arrow:hover {
+  color: var(--gold);
+}
+
+/* Homepage Calculators Section */
+.calc-home-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.calc-home-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.calc-home-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+
+.calc-home-card .calc-hub-glyph {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.calc-home-card h4 {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--gold-soft);
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .calc-hub-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .calc-home-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .calc-match-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calc-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .calc-hub-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calc-home-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .calc-form {
+    padding: 24px 20px;
+  }
+
+  .calc-result {
+    padding: 28px 20px;
+  }
+
+  .calc-result-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .calc-big-num {
+    font-size: 56px;
+  }
+
+  .calc-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .calc-guna-row {
+    grid-template-columns: 90px 1fr 50px;
+    gap: 8px;
+  }
+
+  .calc-home-card {
+    padding: 20px 14px;
+  }
+
+  .calc-home-card h4 {
+    font-size: 14px;
   }
 }

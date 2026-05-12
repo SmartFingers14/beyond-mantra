@@ -89,9 +89,9 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {/* ── Two Flames Loader ── fires before React hydrates, pure inline HTML/CSS/JS */}
-        <div id="bm-loader" dangerouslySetInnerHTML={{
+        <div id="bm-loader" suppressHydrationWarning dangerouslySetInnerHTML={{
           __html: `
 <style>
 #bm-loader{position:fixed;inset:0;z-index:99999;background:#050308;display:flex;align-items:center;justify-content:center;pointer-events:all;transition:opacity 0.7s ease}
@@ -120,7 +120,7 @@ export default function RootLayout({
     var el=document.getElementById('bm-loader');
     if(!el)return;
     el.classList.add('fade-out');
-    setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},800);
+    setTimeout(function(){el.style.display='none';},800);
   }
   // Minimum display: 1.6s (merge starts at 2s but we don't need to wait for full animation)
   // Hard cap: 3s — dismiss fast, never leave user stuck

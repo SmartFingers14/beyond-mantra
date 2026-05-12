@@ -1,16 +1,21 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function StarField() {
     const rootRef = useRef<HTMLDivElement>(null)
+    const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    useEffect(() => {
+        if (!mounted) return
         const el = rootRef.current
         if (!el) return
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-        // Use passive scroll listener instead of continuous RAF loop
         let ticking = false
         const onScroll = () => {
             if (!ticking) {
@@ -21,11 +26,13 @@ export default function StarField() {
                 })
             }
         }
-        // Set initial value
         el.style.setProperty('--scroll', window.scrollY + 'px')
         window.addEventListener('scroll', onScroll, { passive: true })
         return () => window.removeEventListener('scroll', onScroll)
-    }, [])
+    }, [mounted])
+
+    // Render nothing on server — prevents hydration mismatch with loader script
+    if (!mounted) return null
 
     return (
         <div className="starfield" aria-hidden="true" ref={rootRef}>
