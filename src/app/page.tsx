@@ -55,6 +55,29 @@ const testimonials = [
   },
 ]
 
+const crafts = [
+  {
+    glyph: '◐', title: 'Vastu', archetype: 'his stillness', energy: 'shiva',
+    body: 'The sacred geometry of your space. The walls you live within shape the life you live inside them — we align your home and work to the directions of the cosmos.',
+  },
+  {
+    glyph: '◐', title: 'Numerology', archetype: 'his structure', energy: 'shiva',
+    body: 'The hidden mathematics of your name and birthdate. Every number is a frequency, every frequency a direction — we read them like a private language only the universe writes.',
+  },
+  {
+    glyph: '◐', title: 'Tarot', archetype: 'his clarity', energy: 'shiva',
+    body: 'Not fortune-telling — frame-revealing. Each card is a mirror for this moment, showing what is moving inside you and what your next sacred step truly is.',
+  },
+  {
+    glyph: '◑', title: 'Vedic Astrology', archetype: 'her cosmos', energy: 'shakti',
+    body: 'Your soul\u2019s blueprint, drawn in the sky the moment you arrived. We read transits, dashas, and karma — not to predict your life, but to help you remember why you came.',
+  },
+  {
+    glyph: '◑', title: 'White Magic & Spell-Craft', archetype: 'her flame', energy: 'shakti',
+    body: 'The oldest art the world forgot how to honor. Sacred ritual to align — never to control. Where the chart reveals, the ritual moves. Always for the highest good.',
+  },
+]
+
 const stats = [
   { value: '14+', label: 'Years of Practice' },
   { value: '1,200+', label: 'Souls Guided' },
@@ -237,6 +260,34 @@ export default function Home() {
                     <p>{p.body}</p>
                     <Link href="/services" className="service-card__cta">
                       {p.cta} <span>→</span>
+                    </Link>
+                  </div>
+                </Reveal>
+              </TiltCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Sacred Crafts ── */}
+      <section className="section">
+        <div className="container">
+          <div className="section-head">
+            <h5>The Five Sacred Crafts</h5>
+            <h2>Every soul is met by the craft it needs.</h2>
+          </div>
+          <div className="crafts-grid">
+            {crafts.map((c, i) => (
+              <TiltCard key={c.title}>
+                <Reveal delay={i * 0.08}>
+                  <div className={`craft-card craft-card--${c.energy}${i === 4 ? ' craft-card--wide' : ''}`}>
+                    <span className={`craft-aura craft-aura--${c.energy}`} aria-hidden="true" />
+                    <div className="craft-glyph">{c.glyph}</div>
+                    <h3 className="craft-title">{c.title}</h3>
+                    <span className="craft-archetype">{c.archetype}</span>
+                    <p className="craft-body">{c.body}</p>
+                    <Link href="/services" className="craft-cta">
+                      Explore <span>→</span>
                     </Link>
                   </div>
                 </Reveal>

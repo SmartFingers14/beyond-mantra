@@ -1965,6 +1965,164 @@ footer {
 }
 
 /* =====================================================================
+   Sacred Crafts — Five Sacred Crafts grid (homepage)
+   ===================================================================== */
+
+.crafts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.crafts-grid>*:nth-child(5) {
+  grid-column: 1 / -1;
+}
+
+.craft-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(10, 6, 19, 0.85);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 42px 36px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.craft-card:hover {
+  border-color: rgba(201, 169, 106, 0.32);
+  box-shadow: 0 0 48px rgba(201, 169, 106, 0.06);
+}
+
+/* ---- Aura glow (crescent energy) ---- */
+.craft-aura {
+  position: absolute;
+  top: 0;
+  width: 180px;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.12;
+  filter: blur(48px);
+  transition: opacity 0.5s ease;
+}
+
+.craft-card:hover .craft-aura {
+  opacity: 0.22;
+}
+
+.craft-aura--shiva {
+  left: 0;
+  background: radial-gradient(ellipse at 0% 50%, var(--violet-soft) 0%, transparent 70%);
+}
+
+.craft-aura--shakti {
+  right: 0;
+  left: auto;
+  background: radial-gradient(ellipse at 100% 50%, var(--gold) 0%, transparent 70%);
+}
+
+.craft-glyph {
+  font-size: 44px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.craft-card--shiva .craft-glyph {
+  color: var(--violet-soft);
+  text-shadow: 0 0 28px rgba(155, 134, 255, 0.4);
+}
+
+.craft-card--shakti .craft-glyph {
+  color: var(--gold);
+  text-shadow: 0 0 28px rgba(201, 169, 106, 0.4);
+}
+
+.craft-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 30px);
+  color: #fff;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.craft-archetype {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+
+.craft-card--shiva .craft-archetype {
+  color: var(--violet-soft);
+}
+
+.craft-card--shakti .craft-archetype {
+  color: var(--gold-soft);
+}
+
+.craft-body {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0;
+  max-width: 540px;
+}
+
+.craft-card--wide .craft-body {
+  max-width: 680px;
+}
+
+.craft-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.7;
+  transition: opacity 0.3s, gap 0.3s;
+  text-decoration: none;
+}
+
+.craft-cta:hover {
+  opacity: 1;
+  gap: 12px;
+}
+
+/* ---- Wide card (5th) — centered content ---- */
+.craft-card--wide {
+  text-align: center;
+  align-items: center;
+}
+
+/* ---- Responsive: single column on mobile ---- */
+@media (max-width: 720px) {
+  .crafts-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .crafts-grid>*:nth-child(5) {
+    grid-column: auto;
+  }
+
+  .craft-card {
+    padding: 32px 24px 28px;
+  }
+}
+
+/* =====================================================================
    Flames Section
    ===================================================================== */
 
