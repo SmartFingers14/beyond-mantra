@@ -1094,6 +1094,382 @@ footer {
   margin: 18px auto 36px;
 }
 
+/* =====================================================================
+   Homepage — Section Divider
+   ===================================================================== */
+.section-divider {
+  text-align: center;
+  padding: 16px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.section-divider span {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--gold);
+  opacity: 0.45;
+  letter-spacing: 8px;
+  display: inline-block;
+  animation: glyph-pulse 4s ease-in-out infinite;
+}
+
+@keyframes glyph-pulse {
+
+  0%,
+  100% {
+    opacity: 0.35;
+    text-shadow: none;
+  }
+
+  50% {
+    opacity: 0.75;
+    text-shadow: 0 0 20px rgba(201, 169, 106, 0.55);
+  }
+}
+
+/* =====================================================================
+   Homepage — Flames Interlude Section
+   ===================================================================== */
+.flames-section {
+  padding: 40px 0 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.flames-inner {
+  text-align: center;
+}
+
+/* =====================================================================
+   Homepage — Service Card sub-elements
+   ===================================================================== */
+.service-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.service-tag {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--violet-soft);
+  padding: 5px 12px;
+  border: 1px solid rgba(124, 92, 255, 0.25);
+  border-radius: 999px;
+  background: rgba(124, 92, 255, 0.08);
+}
+
+.service-glyph {
+  font-family: var(--serif);
+  font-size: 52px;
+  color: var(--gold);
+  opacity: 0.85;
+  line-height: 1;
+  margin: 4px 0 16px;
+  display: block;
+}
+
+.service-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+
+.service-card__cta:hover {
+  gap: 14px;
+  color: var(--gold-soft);
+}
+
+.service-card__cta span {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.service-card__cta:hover span {
+  transform: translateX(4px);
+}
+
+/* =====================================================================
+   Homepage — Sacred Crafts Section
+   ===================================================================== */
+.crafts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+/* 5th card spans full width, centered */
+.crafts-grid .tilt-card:nth-child(5) {
+  grid-column: 1 / -1;
+  max-width: 580px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .crafts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crafts-grid .tilt-card:nth-child(5) {
+    grid-column: auto;
+    max-width: 100%;
+  }
+}
+
+.craft-card {
+  position: relative;
+  padding: 38px 34px;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  overflow: hidden;
+  transition: border-color 0.35s, transform 0.5s cubic-bezier(0.2, 0.9, 0.25, 1);
+  height: 100%;
+}
+
+.craft-card--shiva {
+  border-color: rgba(124, 92, 255, 0.2);
+}
+
+.craft-card--shiva:hover {
+  border-color: rgba(124, 92, 255, 0.5);
+}
+
+.craft-card--shakti {
+  border-color: rgba(201, 169, 106, 0.2);
+}
+
+.craft-card--shakti:hover {
+  border-color: rgba(201, 169, 106, 0.5);
+}
+
+.craft-aura {
+  position: absolute;
+  top: 0;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  filter: blur(50px);
+  pointer-events: none;
+  opacity: 0.3;
+  transition: opacity 0.5s;
+}
+
+.craft-aura--shiva {
+  left: -40px;
+  background: radial-gradient(circle, rgba(124, 92, 255, 0.85), transparent 70%);
+}
+
+.craft-aura--shakti {
+  right: -40px;
+  background: radial-gradient(circle, rgba(201, 169, 106, 0.85), transparent 70%);
+}
+
+.craft-card:hover .craft-aura {
+  opacity: 0.55;
+}
+
+.craft-glyph {
+  font-family: var(--serif);
+  font-size: 44px;
+  line-height: 1;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.craft-card--shiva .craft-glyph {
+  color: var(--violet-soft);
+}
+
+.craft-card--shakti .craft-glyph {
+  color: var(--gold);
+}
+
+.craft-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+
+.craft-archetype {
+  display: block;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.craft-card--shiva .craft-archetype {
+  color: var(--violet-soft);
+}
+
+.craft-card--shakti .craft-archetype {
+  color: var(--gold);
+}
+
+.craft-body {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0 0 20px;
+  opacity: 1;
+}
+
+.craft-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+
+.craft-cta:hover {
+  gap: 12px;
+  color: var(--gold-soft);
+}
+
+.craft-cta span {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.craft-cta:hover span {
+  transform: translateX(4px);
+}
+
+/* =====================================================================
+   Homepage — "Is This For You?" Section
+   ===================================================================== */
+.ifyou-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 56px;
+}
+
+@media (max-width: 920px) {
+  .ifyou-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .ifyou-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ifyou-card {
+  position: relative;
+  padding: 40px 32px;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, rgba(124, 92, 255, 0.05), rgba(201, 169, 106, 0.02));
+  overflow: hidden;
+  transition: border-color 0.35s, transform 0.5s cubic-bezier(0.2, 0.9, 0.25, 1);
+  height: 100%;
+}
+
+.ifyou-card:hover {
+  border-color: rgba(201, 169, 106, 0.38);
+  transform: translateY(-4px);
+}
+
+.ifyou-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(360px circle at 50% -20%, rgba(201, 169, 106, 0.06), transparent 70%);
+}
+
+.ifyou-symbol {
+  font-family: var(--serif);
+  font-size: 44px;
+  color: var(--gold);
+  opacity: 0.85;
+  line-height: 1;
+  margin-bottom: 18px;
+  display: block;
+}
+
+.ifyou-archetype {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--violet-soft);
+  margin-bottom: 12px;
+}
+
+.ifyou-title {
+  font-family: var(--serif);
+  font-size: clamp(19px, 1.8vw, 24px);
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.25;
+  margin: 0 0 14px;
+}
+
+.ifyou-body {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0;
+  opacity: 1;
+}
+
+.ifyou-closing {
+  text-align: center;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.ifyou-tagline {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(17px, 2vw, 22px);
+  color: var(--gold-soft);
+  max-width: 680px;
+  margin: 0;
+  line-height: 1.55;
+  opacity: 1;
+}
+
+/* =====================================================================
+   Stacking — make new homepage sections sit above starfield
+   ===================================================================== */
+.flames-section,
+.ifyou-section,
+.section-divider {
+  position: relative;
+  z-index: 1;
+}
+
 /* ----- Footer --------------------------------------------------- */
 .site-footer {
   padding: 90px 0 30px;
