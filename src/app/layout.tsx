@@ -8,7 +8,6 @@ import Footer from '@/components/Footer'
 import StarField from '@/components/StarField'
 import LenisProvider from '@/components/LenisProvider'
 import ClientMotion from '@/components/ClientMotion'
-import RouteCurtainWrapper from '@/components/RouteCurtainWrapper'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -88,7 +87,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
       <head>
-        <link rel="preload" as="video" href="/hero.webm" type="video/webm" />
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
@@ -124,11 +122,11 @@ export default function RootLayout({
     el.classList.add('fade-out');
     setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},800);
   }
-  // Minimum display: 2.8s (so merge animation completes)
-  // Hard cap: 6s — if page never fires 'load' (slow network, blocked resource), dismiss anyway
+  // Minimum display: 1.6s (merge starts at 2s but we don't need to wait for full animation)
+  // Hard cap: 3s — dismiss fast, never leave user stuck
   var minDone=false,pageDone=false;
-  var minTimer=setTimeout(function(){minDone=true;if(pageDone)dismiss();},2800);
-  var hardCap=setTimeout(function(){dismiss();},6000);
+  var minTimer=setTimeout(function(){minDone=true;if(pageDone)dismiss();},1600);
+  var hardCap=setTimeout(function(){dismiss();},3000);
   function onPageReady(){
     pageDone=true;
     if(minDone)dismiss();
@@ -149,7 +147,6 @@ export default function RootLayout({
           <main style={{ paddingTop: 0 }}>{children}</main>
           <Footer />
           <ClientMotion />
-          <RouteCurtainWrapper />
           {/* WhatsApp float */}
           <a
             href="https://wa.me/919999999999"
