@@ -14,6 +14,7 @@ const services = [
         glyph: '☉',
         title: 'Vedic Astrology Reading',
         tag: 'Vedic Astrology',
+        by: 'The Oracle',
         tagline: 'Your blueprint, decoded.',
         body: 'A 90-minute deep dive into your birth chart — dashas, transits, and the timing the cosmos has prepared for your next chapter. Not prediction. Precision.',
         includes: ['Birth chart analysis', 'Current dasha & transits', 'Next 12-month timing', 'Audio recording'],
@@ -27,7 +28,8 @@ const services = [
         pillar: 'The Mirror',
         glyph: '☾',
         title: 'Tarot & Oracle Session',
-        tag: 'Tarot & Oracle',
+        tag: 'Tarot',
+        by: 'The Architect',
         tagline: 'The question behind the question.',
         body: 'A reflective conversation through the cards. Bring one question. Leave with the one you should have asked. The mirror shows what the mind refuses to see.',
         includes: ['Full spread reading', 'Oracle card guidance', 'Written card notes', 'Follow-up Q&A'],
@@ -42,6 +44,7 @@ const services = [
         glyph: '✦',
         title: 'Numerology Blueprint',
         tag: 'Numerology',
+        by: 'The Architect',
         tagline: 'The geometry of your name.',
         body: 'Decode your name, your date, and the silent geometry of your destiny — with a written report to keep. Numbers do not lie. They only wait to be read.',
         includes: ['Life path analysis', 'Name numerology', 'Destiny & soul number', 'Written PDF report'],
@@ -56,6 +59,7 @@ const services = [
         glyph: '⚭',
         title: 'Couple Compatibility',
         tag: 'Synastry',
+        by: 'Both',
         tagline: 'Two charts. One cosmic agreement.',
         body: 'Two charts read as one. For couples ready to understand the cosmic agreement they signed before this lifetime. Where you align. Where you teach each other.',
         includes: ['Synastry chart reading', 'Composite chart', 'Karmic patterns', 'Relationship timing'],
@@ -70,6 +74,7 @@ const services = [
         glyph: '◈',
         title: 'Career & Wealth Guidance',
         tag: 'Dharma & Wealth',
+        by: 'Both',
         tagline: 'Work that aligns with who you are.',
         body: 'Identify your dharma, your wealth windows and the work that aligns logic, intuition and abundance. The cosmos has a career plan. We help you read it.',
         includes: ['10th house deep dive', 'Wealth timing windows', 'Dharma alignment', 'Action roadmap'],
@@ -82,11 +87,12 @@ const services = [
         num: '06',
         pillar: 'The Mystery',
         glyph: '⟁',
-        title: 'White Magic & Vastu',
-        tag: 'Ritual & Remedy',
+        title: 'Vastu & White Magic',
+        tag: 'Space & Ritual',
+        by: 'Both',
         tagline: 'Sacred practice. Never performance.',
-        body: 'Sacred remedies, energy clearing and home alignment — performed only when your readings call for it. This is medicine, not theatre. We do not offer it lightly.',
-        includes: ['Energy assessment', 'Vastu consultation', 'Ritual prescription', 'Sacred remedy kit'],
+        body: 'Vastu alignment by The Architect brings your home into harmony with the cosmos. White Magic rituals by The Oracle clear what logic alone cannot move. Two arts. One remedy.',
+        includes: ['Vastu consultation', 'Space energy assessment', 'White Magic ritual', 'Sacred remedy kit'],
         price: 'On Consultation',
         duration: 'Varies',
         color: 'gold',
@@ -119,6 +125,7 @@ function ServiceCard({ s, index }: { s: typeof services[0]; index: number }) {
             </div>
             <div className="svc-card__glyph">{s.glyph}</div>
             <div className="svc-card__pillar">{s.pillar}</div>
+            <div className="svc-card__by">with {s.by}</div>
             <h3 className="svc-card__title">{s.title}</h3>
             <p className="svc-card__tagline">{s.tagline}</p>
             <p className="svc-card__body">{s.body}</p>

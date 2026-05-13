@@ -31,8 +31,8 @@ export default function About() {
                         <h5>The Architect</h5>
                         <h2>He builds the structure that makes prophecy usable.</h2>
                         <p className="lead" style={{ marginTop: 18 }}>
-                            With over a decade in Vedic astrology, numerology, and ancient text study, he is the keeper
-                            of charts, timing, and the unmoving math of the cosmos. Where intuition speaks in poems, he
+                            With over a decade in Tarot, Vastu, and Numerology, he is the keeper of cards, sacred geometry,
+                            and the unmoving mathematics of names and dates. Where intuition speaks in images, he
                             translates it into a path you can walk.
                         </p>
                         <p style={{ marginTop: 18 }}>
@@ -49,9 +49,9 @@ export default function About() {
                         <h5>The Oracle</h5>
                         <h2>She holds the mirror your soul has been waiting for.</h2>
                         <p className="lead" style={{ marginTop: 18 }}>
-                            A tarot reader, energy healer and intuitive guide, she listens to the silence between your
-                            words. Her gift is not in answering — it is in asking the question your heart was too scared
-                            to ask itself.
+                            A Vedic astrologer and practitioner of White Magic, she reads the sky and the sacred flame
+                            with equal fluency. Her gift is not in answering — it is in asking the question your heart
+                            was too scared to ask itself.
                         </p>
                         <p style={{ marginTop: 18 }}>
                             What she offers cannot be measured. Only felt — and quietly, life begins to rearrange.
